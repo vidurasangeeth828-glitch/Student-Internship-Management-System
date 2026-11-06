@@ -1,0 +1,80 @@
+/* Sign in and sign up share the home page colors and background. */
+[hidden] { display: none !important; }
+main.auth-page {
+    min-height: 100svh;
+    padding: 36px 20px;
+}
+.auth-content { width: 100%; text-align: center; position: relative; }
+.signin-content { max-width: 390px; }
+.signup-content { max-width: 530px; }
+.auth-brand { justify-content: center; margin-bottom: 24px; }
+.auth-brand strong { font-size: 2rem; }
+.auth-brand .brand-icon { width: 45px; height: 42px; }
+.auth-content h1 { font-size: clamp(1.85rem, 4vw, 2.55rem); color: var(--ink); line-height: 1.15; overflow-wrap: anywhere; }
+.auth-subtitle { margin: 13px 0 28px; color: var(--muted); line-height: 1.5; font-size: .98rem; }
+.auth-form { display: grid; gap: 17px; text-align: left; }
+.auth-form label { display: block; font-size: .9rem; font-weight: 650; color: #675778; }
+.auth-form input:not([type="radio"], [type="checkbox"], [type="hidden"]) {
+    display: block;
+    width: 100%;
+    min-height: 47px;
+    margin-top: 6px;
+    border: 1px solid #ceb1ec;
+    border-radius: 99px;
+    padding: 10px 17px;
+    background: #ffffffdd;
+    color: var(--ink);
+    font-size: .92rem;
+}
+.auth-form > input:not([type="hidden"]) { margin-top: 0 !important; }
+.auth-form input::placeholder { color: #81758b; }
+.auth-form input::-ms-reveal { display: none; }
+.auth-form input::-ms-clear { display: none; }
+.password-field { position: relative; display: block; }
+.auth-form .password-field input { padding-right: 52px; }
+.password-toggle {
+    display: grid;
+    place-items: center;
+    position: absolute;
+    right: 5px;
+    bottom: 2px;
+    width: 44px;
+    height: 44px;
+    padding: 10px;
+    border: 0;
+    border-radius: 50%;
+    color: #7d708b;
+    background: transparent;
+}
+.password-toggle svg { width: 21px; height: 21px; }
+.form-options { display: flex; align-items: center; justify-content: space-between; gap: 12px; font-size: .9rem; }
+.auth-form .remember { display: inline-flex; align-items: center; min-height: 30px; gap: 8px; font-weight: 500; color: var(--muted); }
+.remember input { min-height: 0; width: 17px; height: 17px; accent-color: var(--purple); margin: 0; }
+.auth-content a:not(.brand) { color: var(--purple); font-weight: 600; }
+.auth-content a:hover { text-decoration: underline; }
+.auth-submit { width: 100%; min-height: 48px; padding: 10px 16px; border: 0; border-radius: 99px; background: #7806bd; color: white; font: inherit; font-weight: 700; }
+.auth-submit:hover { background: #6505a1; }
+.auth-bottom { color: var(--muted); font-size: .92rem; margin: 23px 0 0; }
+.auth-bottom a { display: inline-flex; align-items: center; min-height: 34px; }
+.auth-content .back-home { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; margin-top: 17px; color: #80758b; font-size: .93rem; }
+.role-choices { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0; margin: 0 0 4px; border: 0; min-width: 0; }
+.auth-form .role-choice { display: flex; align-items: center; gap: 9px; padding: 13px 15px; border: 1px solid #d6ccdf; border-radius: 24px; color: #746983; background: #ffffffb8; cursor: pointer; min-width: 0; font-size: 1rem; }
+.role-choice:has(input:checked) { background: #f1e7ff; border-color: #8b26e0; color: #7206bc; }
+.role-choice svg { width: 27px; height: 27px; flex-shrink: 0; }
+.role-choice input { accent-color: #7806bd; width: 18px; height: 18px; min-height: 0; margin: 0 0 0 auto; }
+.field-grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 16px; }
+.field-grid > label { min-width: 0; }
+.company-fields { padding: 0; margin: 0; border: 0; min-width: 0; }
+.auth-form small { font-size: .78rem; font-weight: 400; }
+.password-help { display: block; margin-top: 5px; color: var(--muted); }
+.approval-note { margin: 0; color: #786787; font-size: .85rem; line-height: 1.5; text-align: center; }
+.form-message { background: #f5edff; color: #5d3885; border: 1px solid #e5d1fa; border-radius: 14px; padding: 12px 15px; font-size: .9rem; line-height: 1.5; margin: 0 0 18px; }
+@media (max-width: 480px) {
+    main.auth-page { padding: 28px 20px; }
+    .auth-brand { margin-bottom: 20px; }
+    .auth-subtitle { margin-bottom: 23px; }
+    .field-grid { grid-template-columns: 1fr; gap: 15px; }
+    .role-choices { gap: 8px; }
+    .auth-form .role-choice { padding: 11px 10px; gap: 7px; font-size: .9rem; }
+    .role-choice svg { width: 22px; height: 22px; }
+}
