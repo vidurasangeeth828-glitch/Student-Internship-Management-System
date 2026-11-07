@@ -24,7 +24,7 @@
             <a href="#opportunity-search">Internships</a>
             <button class="nav-link" type="button" data-section="Companies">Companies</button>
             <button class="admin-button" type="button" data-section="Admin">Admin</button>
-            <button class="account-button" type="button" data-section="Sign In / Sign Up">Sign In / Sign Up</button>
+            <a class="account-button" href="signin.php">Sign In / Sign Up</a>
         </nav>
     </header>
 

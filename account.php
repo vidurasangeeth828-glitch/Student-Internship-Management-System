@@ -5,7 +5,7 @@ if (!isset($_SESSION["user_id"])) {
 }
 require "db.php";
 
-$stmt = $conn->prepare("SELECT u.full_name, u.role, c.approval_status FROM users u
+$stmt = $conn->prepare("SELECT u.full_name, u.email, u.role, c.approval_status FROM users u
                         LEFT JOIN companies c ON c.user_id = u.user_id
                         WHERE u.user_id = ? AND u.status = 'Active'");
 $stmt->bind_param("i", $_SESSION["user_id"]);
@@ -32,6 +32,10 @@ if (!$user) {
             <a class="brand auth-brand" href="index.php"><img class="brand-icon" src="assets/logo.svg" alt="" width="40" height="38"><strong>SIMS</strong></a>
             <h1>Welcome, <?= e($user["full_name"]) ?></h1>
             <p class="auth-subtitle">You are signed in as a <?= e($user["role"]) ?>.</p>
+            <p class="auth-subtitle"><?= e($user["email"]) ?></p>
+            <?php if ($user["role"] === "student"): ?>
+                <a class="back-home" href="student-dashboard.php">← Back to dashboard</a>
+            <?php endif; ?>
             <?php if ($user["role"] === "company"): ?>
                 <p class="form-message">Company approval: <?= e($user["approval_status"]) ?>. Approval is required before posting internships.</p>
             <?php endif; ?>
