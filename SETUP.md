@@ -13,6 +13,20 @@ Companies register with Company name, Email, Contact number, optional Business r
 
 Remember email saves the sign-in email in a 30-day cookie. It does not store the password.
 
+<<<<<<< Updated upstream
 After login, account.php is a protected account confirmation page with the role, company approval state and Sign out. Role dashboards and the admin approval interface belong to the next implementation stage.
+=======
+Students reach student-dashboard.php after login. The dashboard uses dashboard.css for the glass cards, grid and colored glows, and dashboard.js for the mobile sidebar.
+
+The dashboard reads applications and internships from MySQL. Import the updated database.sql to create these tables on an existing installation. It uses CREATE TABLE IF NOT EXISTS and preserves existing users.
+
+Browse Internships and the Home/Dashboard search forms open internships.php. Keyword, location and category filters work together. This public page shows open, unexpired vacancies from approved active companies.
+
+Import the updated database.sql for the category column. Existing vacancies receive Other until their category is set. View details currently expands the description on the card. A separate details/application flow will be built next.
+
+My Applications currently jumps to the dashboard applications section. The separate application tracker and editable profile pages will be built in the next stage.
+
+Profile and My account open account.php, which includes a link back to the Student Dashboard. Companies continue to use account.php until the Company Dashboard is built.
+>>>>>>> Stashed changes
 
 There are no seeded demo accounts. Register your own account using the form.

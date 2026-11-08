@@ -32,9 +32,23 @@ if (post_text("remember_email") === "1") {
     ]);
 }
 
+$applyAfterLogin = 0;
+if (isset($_SESSION["apply_after_login"]) && is_int($_SESSION["apply_after_login"])) {
+    $applyAfterLogin = $_SESSION["apply_after_login"];
+}
+
 session_regenerate_id(true);
 $_SESSION = [
     "user_id" => (int) $user["user_id"],
     "token" => bin2hex(random_bytes(32))
 ];
+<<<<<<< Updated upstream
+=======
+if ($user["role"] === "student") {
+    if ($applyAfterLogin > 0) {
+        redirect("apply.php?id=" . $applyAfterLogin);
+    }
+    redirect("student-dashboard.php");
+}
+>>>>>>> Stashed changes
 redirect("account.php");
