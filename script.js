@@ -1,6 +1,3 @@
-var pageDialog = document.getElementById("page-dialog");
-var dialogTitle = document.getElementById("dialog-title");
-var dialogMessage = document.getElementById("dialog-message");
 var menuButton = document.querySelector(".menu-toggle");
 var navigation = document.getElementById("main-navigation");
 
@@ -37,17 +34,3 @@ document.addEventListener("keydown", function (event) {
 
 window.matchMedia("(max-width: 600px)").addEventListener("change", closeMenu);
 
-document.querySelectorAll("[data-section]").forEach(function (button) {
-    button.addEventListener("click", function () {
-        dialogTitle.textContent = button.dataset.section;
-        dialogMessage.textContent = "This section is coming soon.";
-        pageDialog.showModal();
-    });
-});
-
-document.getElementById("opportunity-search").addEventListener("submit", function (event) {
-    event.preventDefault();
-    dialogTitle.textContent = "Internship opportunities";
-    dialogMessage.textContent = "No vacancies have been published yet. Please check back later.";
-    pageDialog.showModal();
-});

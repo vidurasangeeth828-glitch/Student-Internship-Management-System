@@ -31,6 +31,7 @@ nav > a, nav > button { display: inline-flex; align-items: center; justify-conte
 .nav-link, .admin-button { border: 0; background: transparent; color: #6e6777; padding: 0; }
 nav > a { color: #6e6777; }
 .account-button { color: white; background: #7806bd; padding: 9px 20px; border: 0; border-radius: 11px; }
+.account-button:hover, .account-button:focus-visible { color: white; background: #6505a1; text-decoration: none; }
 main {
     position: relative;
     isolation: isolate;
@@ -165,5 +166,5 @@ dialog p { color: var(--muted); line-height: 1.5; }
         border-radius: 8px;
         font-size: .94rem;
     }
-    .header nav > a:hover, .header nav > .nav-link:hover, .header nav > .admin-button:hover { background: #f8f2fc; }
+    .header nav > a:not(.account-button):hover, .header nav > .nav-link:hover, .header nav > .admin-button:hover { background: #f8f2fc; }
 }

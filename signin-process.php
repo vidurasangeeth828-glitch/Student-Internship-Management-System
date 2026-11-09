@@ -21,6 +21,7 @@ if (post_text("remember_email") === "1") {
         "expires" => time() + 30 * 24 * 60 * 60,
         "path" => rtrim(str_replace("\\", "/", dirname($_SERVER["SCRIPT_NAME"])), "/") . "/",
         "httponly" => true,
+        "secure" => $secureConnection,
         "samesite" => "Lax"
     ]);
 } else {
@@ -28,8 +29,14 @@ if (post_text("remember_email") === "1") {
         "expires" => time() - 3600,
         "path" => rtrim(str_replace("\\", "/", dirname($_SERVER["SCRIPT_NAME"])), "/") . "/",
         "httponly" => true,
+        "secure" => $secureConnection,
         "samesite" => "Lax"
     ]);
+}
+
+$applyAfterLogin = 0;
+if (isset($_SESSION["apply_after_login"]) && is_int($_SESSION["apply_after_login"])) {
+    $applyAfterLogin = $_SESSION["apply_after_login"];
 }
 
 session_regenerate_id(true);
@@ -39,6 +46,9 @@ $_SESSION = [
     "token" => bin2hex(random_bytes(32))
 ];
 if ($user["role"] === "student") {
+    if ($applyAfterLogin > 0) {
+        redirect("apply.php?id=" . $applyAfterLogin);
+    }
     redirect("student-dashboard.php");
 }
-redirect("account.php");
+redirect("company-dashboard.php");

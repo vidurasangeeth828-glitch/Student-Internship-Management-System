@@ -21,9 +21,9 @@
             </svg>
         </button>
         <nav id="main-navigation" aria-label="Main navigation">
-            <a href="#opportunity-search">Internships</a>
-            <button class="nav-link" type="button" data-section="Companies">Companies</button>
-            <button class="admin-button" type="button" data-section="Admin">Admin</button>
+            <a href="internships.php">Internships</a>
+            <a href="companies.php">Companies</a>
+            <a class="admin-button" href="admin-signin.php">Admin</a>
             <a class="account-button" href="signin.php">Sign In / Sign Up</a>
         </nav>
     </header>
@@ -40,7 +40,7 @@
             <img class="hero-art art-right" src="assets/hero-analytics.png" alt="" width="1024" height="1024">
         </section>
 
-        <form class="search-bar" id="opportunity-search" role="search">
+        <form class="search-bar" id="opportunity-search" action="internships.php" method="get" role="search">
             <div class="search-inputs">
             <label class="search-field keyword-field">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="7"/><path d="m15 15 6 6"/></svg>
@@ -54,7 +54,7 @@
             </label>
             <label class="search-field category-field">
                 <span class="sr-only">Category</span>
-                <select name="category">
+                <select name="category" aria-label="Category">
                     <option value="">Category</option>
                     <option>Software Development</option>
                     <option>Data &amp; Analytics</option>
@@ -63,6 +63,7 @@
                     <option>Business &amp; Management</option>
                     <option>Engineering</option>
                     <option>Finance &amp; Accounting</option>
+                    <option>Other</option>
                 </select>
             </label>
             </div>
@@ -71,10 +72,6 @@
 
     </main>
 
-    <dialog id="page-dialog" aria-labelledby="dialog-title">
-        <h2 id="dialog-title"></h2>
-        <p id="dialog-message"></p>
-        <form method="dialog"><button class="account-button" type="submit">Close</button></form>
-    </dialog>
+
 </body>
 </html>

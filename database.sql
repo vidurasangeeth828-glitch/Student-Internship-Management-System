@@ -38,12 +38,15 @@ CREATE TABLE IF NOT EXISTS internships (
     company_id INT NOT NULL,
     title VARCHAR(120) NOT NULL,
     description TEXT NOT NULL,
+    category VARCHAR(80) NOT NULL DEFAULT 'Other',
     location VARCHAR(80) NOT NULL,
     deadline DATE NOT NULL,
     status ENUM('Open', 'Closed', 'Archived') NOT NULL DEFAULT 'Open',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (company_id) REFERENCES companies(company_id)
 ) ENGINE=InnoDB;
+
+ALTER TABLE internships ADD COLUMN IF NOT EXISTS category VARCHAR(80) NOT NULL DEFAULT 'Other' AFTER description;
 
 CREATE TABLE IF NOT EXISTS applications (
     application_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -56,4 +59,28 @@ CREATE TABLE IF NOT EXISTS applications (
     UNIQUE (student_id, internship_id),
     FOREIGN KEY (student_id) REFERENCES students(student_id),
     FOREIGN KEY (internship_id) REFERENCES internships(internship_id)
+) ENGINE=InnoDB;
+
+
+-- Student profile fields (safe to run again).
+ALTER TABLE students
+    ADD COLUMN IF NOT EXISTS field_of_interest VARCHAR(100) NOT NULL DEFAULT '',
+    ADD COLUMN IF NOT EXISTS phone VARCHAR(30) NOT NULL DEFAULT '',
+    ADD COLUMN IF NOT EXISTS about_me TEXT NULL,
+    ADD COLUMN IF NOT EXISTS education_status VARCHAR(30) NOT NULL DEFAULT '',
+    ADD COLUMN IF NOT EXISTS skills VARCHAR(500) NOT NULL DEFAULT '',
+    ADD COLUMN IF NOT EXISTS linkedin_url VARCHAR(255) NOT NULL DEFAULT '',
+    ADD COLUMN IF NOT EXISTS github_url VARCHAR(255) NOT NULL DEFAULT '';
+
+-- Student profile photo.
+ALTER TABLE students ADD COLUMN IF NOT EXISTS photo_path VARCHAR(255) NOT NULL DEFAULT '';
+
+-- Separate administrator accounts.
+CREATE TABLE IF NOT EXISTS admins (
+    admin_id INT AUTO_INCREMENT PRIMARY KEY,
+    full_name VARCHAR(120) NOT NULL,
+    email VARCHAR(180) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    status ENUM('Active', 'Inactive') NOT NULL DEFAULT 'Active',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;

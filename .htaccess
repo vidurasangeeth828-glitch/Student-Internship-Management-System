@@ -1,5 +1,16 @@
-<FilesMatch "^(database\.sql|db\.php|session\.php|SETUP\.md)$">
+Options -Indexes
+
+<FilesMatch "^(database\.sql|db\.php|session\.php|setup-admin\.php|SETUP\.md)$">
     Require all denied
 </FilesMatch>
 
 RedirectMatch 403 "(?i)/\.git(?:/|$)"
+
+<IfModule mod_headers.c>
+    Header onsuccess unset X-Content-Type-Options
+    Header always set X-Content-Type-Options "nosniff"
+    Header onsuccess unset X-Frame-Options
+    Header always set X-Frame-Options "DENY"
+    Header onsuccess unset Referrer-Policy
+    Header always set Referrer-Policy "same-origin"
+</IfModule>
