@@ -9,7 +9,7 @@ require "db.php";
 date_default_timezone_set("Asia/Colombo");
 
 $userId = $_SESSION["user_id"];
-$stmt = $conn->prepare("SELECT u.full_name, u.role, s.student_id
+$stmt = $conn->prepare("SELECT u.full_name, u.role, s.student_id, s.photo_path
                         FROM users u
                         LEFT JOIN students s ON s.user_id = u.user_id
                         WHERE u.user_id = ? AND u.status = 'Active'");
@@ -23,7 +23,7 @@ if (!$user) {
 }
 
 if ($user["role"] !== "student") {
-    redirect("account.php");
+    redirect("company-dashboard.php");
 }
 
 if (!$user["student_id"]) {
@@ -112,10 +112,19 @@ $applications = $stmt->get_result();
     </svg>
 
     <a class="skip-link" href="#main">Skip to dashboard</a>
+<<<<<<< Updated upstream
     <div class="ambient ambient-purple" aria-hidden="true"></div>
     <div class="ambient ambient-lavender" aria-hidden="true"></div>
     <div class="ambient ambient-peach" aria-hidden="true"></div>
     <div class="ambient ambient-lilac" aria-hidden="true"></div>
+=======
+    <div class="applications-glows" aria-hidden="true">
+        <div class="ambient ambient-purple" aria-hidden="true"></div>
+        <div class="ambient ambient-lavender" aria-hidden="true"></div>
+        <div class="ambient ambient-peach" aria-hidden="true"></div>
+        <div class="ambient ambient-lilac" aria-hidden="true"></div>
+    </div>
+>>>>>>> Stashed changes
 
     <div class="dashboard-layout">
         <aside class="sidebar surface" id="student-sidebar" aria-label="Student workspace">
@@ -127,8 +136,13 @@ $applications = $stmt->get_result();
             <nav class="sidebar-nav" aria-label="Student navigation">
                 <a href="student-dashboard.php" aria-current="page"><svg class="icon"><use href="#icon-home"/></svg>Dashboard</a>
                 <a href="internships.php"><svg class="icon"><use href="#icon-search"/></svg>Browse Internships</a>
+<<<<<<< Updated upstream
                 <a href="#recent-applications"><svg class="icon"><use href="#icon-file"/></svg>My Applications</a>
                 <a href="account.php"><svg class="icon"><use href="#icon-user"/></svg>Profile</a>
+=======
+                <a href="my-applications.php"><svg class="icon"><use href="#icon-file"/></svg>My Applications</a>
+                <a href="student-profile.php"><svg class="icon"><use href="#icon-user"/></svg>Profile</a>
+>>>>>>> Stashed changes
             </nav>
 
             <div class="sidebar-bottom">
@@ -151,8 +165,13 @@ $applications = $stmt->get_result();
                     <input id="internship-search" name="keyword" placeholder="Search internships..." maxlength="100" value="<?= e($keyword) ?>">
                     <button type="submit" aria-label="Search"><svg class="icon small-icon"><use href="#icon-arrow"/></svg></button>
                 </form>
+<<<<<<< Updated upstream
                 <a class="account-chip surface" href="account.php" aria-label="My account: <?= e($user["full_name"]) ?>">
                     <span class="avatar"><?= e($initial) ?></span>
+=======
+                <a class="account-chip surface" href="student-profile.php" aria-label="My account: <?= e($user["full_name"]) ?>">
+                    <span class="avatar"><?php if (!empty($user["photo_path"])): ?><img src="profile-photo.php?v=<?= e(basename($user["photo_path"])) ?>" alt=""><?php else: ?><?= e($initial) ?><?php endif; ?></span>
+>>>>>>> Stashed changes
                     <span class="account-copy"><strong><?= e($user["full_name"]) ?></strong><small>Student</small></span>
                 </a>
             </header>
@@ -189,10 +208,7 @@ $applications = $stmt->get_result();
                                 </div>
                                 <p class="internship-meta"><svg class="icon small-icon"><use href="#icon-pin"/></svg><?= e($internship["location"]) ?></p>
                                 <p class="internship-meta"><svg class="icon small-icon"><use href="#icon-calendar"/></svg>Apply by <strong><?= e(date("d M Y", strtotime($internship["deadline"]))) ?></strong></p>
-                                <details class="vacancy-details">
-                                    <summary>View details</summary>
-                                    <p><?= e($internship["description"]) ?></p>
-                                </details>
+                                <a class="filter-submit" href="internship-details.php?id=<?= e($internship["internship_id"]) ?>" aria-label="View details: <?= e($internship["title"]) ?>">View details <span aria-hidden="true">→</span></a>
                             </article>
                         <?php endwhile; ?>
                     </div>
@@ -210,7 +226,7 @@ $applications = $stmt->get_result();
                 <section class="panel surface" id="recent-applications">
                     <div class="section-heading">
                         <h2>Recent applications</h2>
-                        <?php if (!$showAll && $applications->num_rows === 5): ?><a href="?all=1#recent-applications">View all</a><?php endif; ?>
+                        <a href="my-applications.php">View all</a>
                     </div>
                     <?php if ($applications->num_rows > 0): ?>
                         <div class="table-scroll" tabindex="0" role="region" aria-label="Recent applications">
@@ -240,8 +256,13 @@ $applications = $stmt->get_result();
                 <section class="panel surface quick-links">
                     <div class="section-heading"><h2>Quick links</h2></div>
                     <a href="internships.php"><svg class="icon"><use href="#icon-search"/></svg>Browse internships<span aria-hidden="true">›</span></a>
+<<<<<<< Updated upstream
                     <a href="account.php"><svg class="icon"><use href="#icon-user"/></svg>My account<span aria-hidden="true">›</span></a>
                     <a href="#recent-applications"><svg class="icon"><use href="#icon-file"/></svg>My applications<span aria-hidden="true">›</span></a>
+=======
+                    <a href="student-profile.php"><svg class="icon"><use href="#icon-user"/></svg>My account<span aria-hidden="true">›</span></a>
+                    <a href="my-applications.php"><svg class="icon"><use href="#icon-file"/></svg>My applications<span aria-hidden="true">›</span></a>
+>>>>>>> Stashed changes
                 </section>
             </div>
         </main>
