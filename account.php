@@ -19,35 +19,4 @@ if (!$user) {
 if ($user["role"] === "student") {
     redirect("student-profile.php");
 }
-?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>My Account | SIMS</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="auth.css">
-</head>
-<body>
-    <main class="auth-page">
-        <section class="auth-content signin-content">
-            <a class="brand auth-brand" href="index.php"><img class="brand-icon" src="assets/logo.svg" alt="" width="40" height="38"><strong>SIMS</strong></a>
-            <h1>Welcome, <?= e($user["full_name"]) ?></h1>
-            <p class="auth-subtitle">You are signed in as a <?= e($user["role"]) ?>.</p>
-            <p class="auth-subtitle"><?= e($user["email"]) ?></p>
-            <?php if ($user["role"] === "student"): ?>
-                <a class="back-home" href="student-dashboard.php">← Back to dashboard</a>
-            <?php endif; ?>
-            <?php if ($user["role"] === "company"): ?>
-                <p class="form-message">Company approval: <?= e($user["approval_status"]) ?>. Approval is required before posting internships.</p>
-            <?php endif; ?>
-            <form class="auth-form" action="logout.php" method="post">
-                <input type="hidden" name="token" value="<?= e($_SESSION["token"]) ?>">
-                <button class="auth-submit" type="submit">Sign out</button>
-            </form>
-            <a class="back-home" href="index.php">← Back to home</a>
-        </section>
-    </main>
-</body>
-</html>
+redirect("company-dashboard.php");

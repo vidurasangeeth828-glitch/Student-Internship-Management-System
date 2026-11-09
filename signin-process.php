@@ -49,4 +49,4 @@ if ($user["role"] === "student") {
     }
     redirect("student-dashboard.php");
 }
-redirect("account.php");
+redirect("company-dashboard.php");

@@ -937,3 +937,306 @@ tr:last-child td { border: 0; }
     .profile-form-actions { flex-direction: column-reverse; align-items: stretch; }
     .profile-form-actions a { justify-content: center; }
 }
+
+/* Profile photos */
+.avatar img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.profile-portrait {
+    display: grid;
+    justify-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+.profile-photo-change {
+    display: inline-flex;
+    align-items: center;
+    min-height: 36px;
+    font-size: .78rem;
+    font-weight: 600;
+}
+.profile-photo-editor {
+    scroll-margin-top: 24px;
+    padding: 25px;
+}
+.profile-photo-editor h2 {
+    font-size: 1.2rem;
+}
+.profile-photo-form {
+    display: grid;
+    gap: 18px;
+    margin-top: 22px;
+}
+.profile-photo-form input[type="file"] {
+    padding: 10px;
+}
+.profile-photo-form input::file-selector-button {
+    min-height: 40px;
+    padding: 8px 12px;
+    margin-right: 12px;
+    background: #f0e3fa;
+    color: #6b2f90;
+    border: 1px solid #dbcce5;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.profile-photo-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+}
+.profile-photo-remove {
+    min-height: 45px;
+    padding: 10px 16px;
+    border: 1px solid #e5bfc4;
+    border-radius: 13px;
+    color: #a22f37;
+    background: white;
+}
+@media (max-width: 600px) {
+    .profile-photo-editor { padding: 20px; }
+    .profile-photo-actions > * { width: 100%; justify-content: center; }
+}
+
+/* Company workspace */
+.company-workspace {
+    gap: 24px;
+}
+.company-welcome {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+}
+.company-welcome > div {
+    min-width: 0;
+}
+.company-subtitle {
+    color: var(--muted);
+    font-size: 1rem;
+    margin-top: 10px;
+    line-height: 1.7;
+}
+.company-post-action {
+    text-align: right;
+    flex: 0 0 210px;
+}
+.company-post-action .filter-submit:disabled {
+    background: #eee5f5;
+    color: #70557f;
+    cursor: not-allowed;
+}
+.company-post-action p {
+    margin-top: 8px;
+    font-size: .76rem;
+    line-height: 1.6;
+    color: var(--muted);
+}
+.company-approval {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 19px 22px;
+    border-radius: 22px;
+}
+.company-approval > div {
+    min-width: 0;
+}
+.company-approval h2 {
+    font-size: .97rem;
+    line-height: 1.5;
+}
+.company-approval p {
+    color: var(--muted);
+    font-size: .86rem;
+    margin-top: 4px;
+    line-height: 1.7;
+}
+.company-approval-icon {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    border-radius: 14px;
+    color: #7534a1;
+    background: #f0e3fa;
+}
+.company-approval-badge {
+    margin-left: auto;
+    padding: 6px 12px;
+    background: #f0e3fa;
+    color: #7534a1;
+    border-radius: 99px;
+    font-size: .8rem;
+    font-weight: 600;
+}
+.approval-pending .company-approval-icon,
+.approval-pending .company-approval-badge {
+    color: #805100;
+    background: #fff1ce;
+}
+.approval-rejected .company-approval-icon,
+.approval-rejected .company-approval-badge {
+    color: #a22f37;
+    background: #fde7e7;
+}
+.company-vacancy-card {
+    padding: 20px;
+}
+.company-vacancy-status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 99px;
+    font-size: .72rem;
+    margin-bottom: 14px;
+}
+.company-vacancy-open {
+    color: #7534a1;
+    background: #f0e3fa;
+}
+.company-vacancy-muted {
+    color: #705e80;
+    background: #f0edf3;
+}
+.company-vacancy-card h3 {
+    font-size: 1rem;
+    line-height: 1.5;
+    overflow-wrap: anywhere;
+}
+.company-vacancy-category {
+    color: var(--muted);
+    font-size: .8rem;
+    margin-block: 8px 14px;
+    overflow-wrap: anywhere;
+}
+.company-listing-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    margin-top: 6px;
+    font-size: .85rem;
+    font-weight: 600;
+}
+.company-details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px 28px;
+    margin: 0;
+}
+.company-details-grid > div {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+.company-details-grid dt {
+    color: var(--muted);
+    font-size: .8rem;
+    margin-bottom: 6px;
+}
+.company-details-grid dd {
+    margin: 0;
+    line-height: 1.7;
+    font-size: .95rem;
+}
+@media (max-width: 700px) {
+    .company-welcome {
+        display: block;
+    }
+    .company-post-action {
+        text-align: left;
+        margin-top: 18px;
+    }
+    .company-approval {
+        flex-wrap: wrap;
+        padding: 18px;
+        gap: 12px;
+    }
+    .company-approval > div {
+        flex: 1 1 160px;
+    }
+    .company-approval-badge {
+        margin-left: 56px;
+    }
+    .company-details-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Post Internship */
+.company-post-link:hover { color: white; text-decoration: none; }
+.post-layout { display: grid; grid-template-columns: minmax(0, 1fr) 285px; gap: 22px; align-items: start; }
+.post-error-summary { margin-bottom: 24px; }
+.post-guidance { padding: 25px; }
+.post-guidance h2 { font-size: 1.12rem; line-height: 1.5; }
+.post-guidance > p, .post-guidance li { font-size: .87rem; color: var(--muted); line-height: 1.8; }
+.post-guidance > p { margin-top: 12px; }
+.post-guidance ul { padding-left: 20px; margin-block: 18px; }
+.post-guidance li + li { margin-top: 10px; }
+.post-company-note { border-top: 1px solid var(--border); padding-top: 18px; overflow-wrap: anywhere; }
+.post-company-note strong { font-size: .95rem; }
+.post-company-note span { display: block; font-size: .8rem; color: var(--muted); line-height: 1.6; margin-top: 8px; }
+.post-success { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.post-success a { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; font-weight: 600; }
+.post-approval-empty { padding: 45px 22px; }
+.post-approval-empty h2 { font-size: 1.3rem; }
+.post-approval-empty .filter-submit { margin-top: 20px; color: white; }
+@media (max-width: 1100px) {
+    .post-layout { grid-template-columns: 1fr; }
+}
+
+/* Admin company approvals */
+.admin-stat-pending .stat-icon { background: #fff1ce; color: #805100; }
+.admin-stat-rejected .stat-icon { background: #fde7e7; color: #a22f37; }
+.admin-company-list { display: grid; gap: 20px; min-width: 0; }
+.admin-company-card { padding: 24px; overflow-wrap: anywhere; }
+.admin-company-details { margin-top: 24px; }
+.admin-company-extra { margin-top: 22px; font-size: .9rem; color: var(--muted); }
+.admin-company-extra summary { display: flex; align-items: center; min-height: 44px; color: var(--purple); font-weight: 600; }
+.admin-company-extra p { margin-top: 12px; line-height: 1.8; }
+.admin-company-description { white-space: pre-wrap; }
+.admin-company-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; border-top: 1px solid var(--border); margin-top: 22px; padding-top: 20px; }
+.admin-company-actions > p { flex: 1; min-width: 150px; color: var(--muted); font-size: .82rem; line-height: 1.7; }
+.admin-reject-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-width: 118px;
+    min-height: 45px;
+    padding: 10px 19px;
+    border: 0;
+    border-radius: 14px;
+    color: white;
+    background: #b83543;
+    font-size: .87rem;
+    font-weight: 650;
+}
+.admin-reject-button:hover { color: white; background: #9f2936; }
+.admin-inactive-note { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--border); color: var(--muted); font-size: .85rem; line-height: 1.7; }
+@media (max-width: 600px) {
+    .admin-company-card { padding: 20px; }
+    .admin-company-actions > p { flex-basis: 100%; }
+    .admin-company-actions button { flex: 1; }
+}
+
+/* Company application reviews */
+.company-application-filters > div { min-width: 0; }
+.company-application-filters select { width: 250px; max-width: 100%; }
+.company-applicant-details { margin-bottom: 22px; }
+.company-application-documents { display: flex; align-items: start; gap: 18px; justify-content: space-between; }
+.company-review-form { display: flex; flex-wrap: wrap; align-items: end; gap: 14px; margin-top: 24px; padding-top: 22px; border-top: 1px solid var(--border); }
+.company-review-form > p { flex: 1; min-width: 180px; font-size: .82rem; color: var(--muted); line-height: 1.7; padding-bottom: 10px; }
+.company-review-form .profile-field { width: 210px; }
+.company-review-form .profile-field label { font-size: .8rem; margin-bottom: 7px; }
+@media (max-width: 600px) {
+    .company-application-filters select { width: 100%; }
+    .company-application-documents { flex-direction: column; }
+    .company-review-form > p { flex-basis: 100%; }
+    .company-review-form .profile-field, .company-review-form > button { width: 100%; }
+}

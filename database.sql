@@ -71,3 +71,16 @@ ALTER TABLE students
     ADD COLUMN IF NOT EXISTS skills VARCHAR(500) NOT NULL DEFAULT '',
     ADD COLUMN IF NOT EXISTS linkedin_url VARCHAR(255) NOT NULL DEFAULT '',
     ADD COLUMN IF NOT EXISTS github_url VARCHAR(255) NOT NULL DEFAULT '';
+
+-- Student profile photo.
+ALTER TABLE students ADD COLUMN IF NOT EXISTS photo_path VARCHAR(255) NOT NULL DEFAULT '';
+
+-- Separate administrator accounts.
+CREATE TABLE IF NOT EXISTS admins (
+    admin_id INT AUTO_INCREMENT PRIMARY KEY,
+    full_name VARCHAR(120) NOT NULL,
+    email VARCHAR(180) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    status ENUM('Active', 'Inactive') NOT NULL DEFAULT 'Active',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;

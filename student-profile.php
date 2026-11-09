@@ -60,6 +60,10 @@ foreach (explode(",", $user["skills"]) as $skill) {
         $skillList[] = $skill;
     }
 }
+$photoError = $_SESSION["photo_error"] ?? "";
+$photoSaved = $_SESSION["photo_saved"] ?? "";
+unset($_SESSION["photo_error"], $_SESSION["photo_saved"]);
+$showPhotoForm = (isset($_GET["photo"]) && $_GET["photo"] === "1") || $photoError !== "";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -140,7 +144,7 @@ foreach (explode(",", $user["skills"]) as $skill) {
                 <a class="back-to-home" href="student-dashboard.php">← Back to dashboard</a>
                 <?php if ($user): ?>
                     <a class="account-chip surface" href="student-profile.php" aria-label="My account: <?= e($user["full_name"]) ?>">
-                        <span class="avatar"><?= e(mb_strtoupper(mb_substr($user["full_name"], 0, 1))) ?></span>
+                        <span class="avatar"><?php if (!empty($user["photo_path"])): ?><img src="profile-photo.php?v=<?= e(basename($user["photo_path"])) ?>" alt=""><?php else: ?><?= e(mb_strtoupper(mb_substr($user["full_name"], 0, 1))) ?><?php endif; ?></span>
                         <span class="account-copy"><strong><?= e($user["full_name"]) ?></strong><small><?= e(ucfirst($user["role"])) ?></small></span>
                     </a>
                 <?php else: ?>
@@ -166,7 +170,9 @@ foreach (explode(",", $user["skills"]) as $skill) {
             <?php endif; ?>
 
             <section class="panel surface profile-header" aria-label="Profile summary">
-                <span class="avatar profile-avatar" aria-hidden="true"><?= e(mb_strtoupper(mb_substr($user["full_name"], 0, 1))) ?></span>
+                <div class="profile-portrait"><span class="avatar profile-avatar" aria-hidden="true"><?php if (!empty($user["photo_path"])): ?><img src="profile-photo.php?v=<?= e(basename($user["photo_path"])) ?>" alt=""><?php else: ?><?= e(mb_strtoupper(mb_substr($user["full_name"], 0, 1))) ?><?php endif; ?></span>
+                    <a class="profile-photo-change" href="student-profile.php?photo=1#photo-upload">Change photo</a>
+                </div>
                 <div class="profile-header-copy">
                     <h2><?= e($user["full_name"]) ?></h2>
                     <p><?= $user["field_of_interest"] !== "" ? e($user["field_of_interest"]) : "Student" ?></p>
@@ -180,6 +186,32 @@ foreach (explode(",", $user["skills"]) as $skill) {
                     <a class="profile-cancel profile-edit-button" href="student-profile.php">← Back to profile</a>
                 <?php endif; ?>
             </section>
+
+            <?php if ($photoSaved !== ""): ?>
+                <p class="profile-success" role="status"><?= e($photoSaved) ?></p>
+            <?php endif; ?>
+            <?php if ($showPhotoForm): ?>
+                <section class="panel surface profile-photo-editor" id="photo-upload" aria-labelledby="photo-title">
+                    <h2 id="photo-title">Profile photo</h2>
+                    <p class="profile-field-help" id="photo-help">Choose a JPG or PNG up to 2 MB. Maximum 4,096 pixels per side and 16 megapixels. It will be displayed in a circle.</p>
+                    <?php if ($photoError !== ""): ?><p class="profile-field-error" role="alert"><?= e($photoError) ?></p><?php endif; ?>
+                    <form action="profile-photo-process.php" method="post" enctype="multipart/form-data" class="profile-photo-form">
+                        <input type="hidden" name="token" value="<?= e($_SESSION["token"]) ?>">
+                        <input type="hidden" name="MAX_FILE_SIZE" value="2097152">
+                        <div class="profile-field">
+                            <label for="photo">Choose profile photo</label>
+                            <input type="file" id="photo" name="photo" accept="image/jpeg,image/png,.jpg,.jpeg,.png" aria-describedby="photo-help">
+                        </div>
+                        <div class="profile-photo-actions">
+                            <button class="filter-submit" type="submit" name="action" value="upload">Save photo</button>
+                            <?php if (!empty($user["photo_path"])): ?>
+                                <button class="profile-photo-remove" type="submit" name="action" value="remove">Remove photo</button>
+                            <?php endif; ?>
+                            <a class="profile-cancel" href="student-profile.php">Cancel</a>
+                        </div>
+                    </form>
+                </section>
+            <?php endif; ?>
 
             <?php if ($editing): ?>
                 <section class="panel surface profile-editor" aria-labelledby="edit-profile-title">

@@ -8,7 +8,7 @@ if (!isset($_SESSION["user_id"])) {
 require "db.php";
 date_default_timezone_set("Asia/Colombo");
 
-$stmt = $conn->prepare("SELECT u.full_name, u.role, s.student_id
+$stmt = $conn->prepare("SELECT u.full_name, u.role, s.student_id, s.photo_path
                         FROM users u
                         LEFT JOIN students s ON s.user_id = u.user_id
                         WHERE u.user_id = ? AND u.status = 'Active'");
@@ -120,7 +120,7 @@ $total = $applications->num_rows;
                 <a class="back-to-home" href="student-dashboard.php">← Back to dashboard</a>
                 <?php if ($user): ?>
                     <a class="account-chip surface" href="student-profile.php" aria-label="My account: <?= e($user["full_name"]) ?>">
-                        <span class="avatar"><?= e(mb_strtoupper(mb_substr($user["full_name"], 0, 1))) ?></span>
+                        <span class="avatar"><?php if (!empty($user["photo_path"])): ?><img src="profile-photo.php?v=<?= e(basename($user["photo_path"])) ?>" alt=""><?php else: ?><?= e(mb_strtoupper(mb_substr($user["full_name"], 0, 1))) ?><?php endif; ?></span>
                         <span class="account-copy"><strong><?= e($user["full_name"]) ?></strong><small><?= e(ucfirst($user["role"])) ?></small></span>
                     </a>
                 <?php else: ?>

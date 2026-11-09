@@ -9,7 +9,7 @@ require "db.php";
 date_default_timezone_set("Asia/Colombo");
 
 $userId = $_SESSION["user_id"];
-$stmt = $conn->prepare("SELECT u.full_name, u.role, s.student_id
+$stmt = $conn->prepare("SELECT u.full_name, u.role, s.student_id, s.photo_path
                         FROM users u
                         LEFT JOIN students s ON s.user_id = u.user_id
                         WHERE u.user_id = ? AND u.status = 'Active'");
@@ -23,7 +23,7 @@ if (!$user) {
 }
 
 if ($user["role"] !== "student") {
-    redirect("account.php");
+    redirect("company-dashboard.php");
 }
 
 if (!$user["student_id"]) {
@@ -154,7 +154,7 @@ $applications = $stmt->get_result();
                     <button type="submit" aria-label="Search"><svg class="icon small-icon"><use href="#icon-arrow"/></svg></button>
                 </form>
                 <a class="account-chip surface" href="student-profile.php" aria-label="My account: <?= e($user["full_name"]) ?>">
-                    <span class="avatar"><?= e($initial) ?></span>
+                    <span class="avatar"><?php if (!empty($user["photo_path"])): ?><img src="profile-photo.php?v=<?= e(basename($user["photo_path"])) ?>" alt=""><?php else: ?><?= e($initial) ?><?php endif; ?></span>
                     <span class="account-copy"><strong><?= e($user["full_name"]) ?></strong><small>Student</small></span>
                 </a>
             </header>

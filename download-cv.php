@@ -8,9 +8,10 @@ if (!isset($_SESSION["user_id"])) {
 require "db.php";
 date_default_timezone_set("Asia/Colombo");
 
-$stmt = $conn->prepare("SELECT u.full_name, u.role, s.student_id
+$stmt = $conn->prepare("SELECT u.full_name, u.role, s.student_id, c.company_id
                         FROM users u
                         LEFT JOIN students s ON s.user_id = u.user_id
+                        LEFT JOIN companies c ON c.user_id = u.user_id
                         WHERE u.user_id = ? AND u.status = 'Active'");
 $stmt->bind_param("i", $_SESSION["user_id"]);
 $stmt->execute();
@@ -21,9 +22,9 @@ if (!$user) {
     redirect("signin.php");
 }
 
-if ($user["role"] !== "student" || !$user["student_id"]) {
+if (($user["role"] === "student" && !$user["student_id"]) || ($user["role"] === "company" && !$user["company_id"])) {
     http_response_code(403);
-    exit("This page is available to active student accounts only.");
+    exit("Your account profile is not available.");
 }
 
 if ($_SERVER["REQUEST_METHOD"] !== "GET" && $_SERVER["REQUEST_METHOD"] !== "HEAD") {
@@ -42,9 +43,19 @@ if ($applicationId === false) {
     exit("CV not available.");
 }
 
-// The application must belong to the student who is signed in.
-$stmt = $conn->prepare("SELECT cv_path FROM applications WHERE application_id = ? AND student_id = ?");
-$stmt->bind_param("ii", $applicationId, $user["student_id"]);
+// Students can download their own CV. Companies can download CVs sent to their internships.
+if ($user["role"] === "student") {
+    $stmt = $conn->prepare("SELECT cv_path FROM applications WHERE application_id = ? AND student_id = ?");
+    $stmt->bind_param("ii", $applicationId, $user["student_id"]);
+} elseif ($user["role"] === "company") {
+    $stmt = $conn->prepare("SELECT a.cv_path FROM applications a
+                            JOIN internships i ON i.internship_id = a.internship_id
+                            WHERE a.application_id = ? AND i.company_id = ?");
+    $stmt->bind_param("ii", $applicationId, $user["company_id"]);
+} else {
+    http_response_code(403);
+    exit("CV access is not available for this account.");
+}
 $stmt->execute();
 $application = $stmt->get_result()->fetch_assoc();
 
