@@ -22,7 +22,7 @@
         </button>
         <nav id="main-navigation" aria-label="Main navigation">
             <a href="internships.php">Internships</a>
-            <button class="nav-link" type="button" data-section="Companies">Companies</button>
+            <a href="companies.php">Companies</a>
             <a class="admin-button" href="admin-signin.php">Admin</a>
             <a class="account-button" href="signin.php">Sign In / Sign Up</a>
         </nav>
@@ -72,10 +72,6 @@
 
     </main>
 
-    <dialog id="page-dialog" aria-labelledby="dialog-title">
-        <h2 id="dialog-title"></h2>
-        <p id="dialog-message"></p>
-        <form method="dialog"><button class="account-button" type="submit">Close</button></form>
-    </dialog>
+
 </body>
 </html>

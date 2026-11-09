@@ -131,6 +131,7 @@ $applications = $stmt->get_result();
                 <a href="internships.php"><svg class="icon"><use href="#icon-search"/></svg>Browse Internships</a>
                 <a href="my-applications.php"><svg class="icon"><use href="#icon-file"/></svg>My Applications</a>
                 <a href="student-profile.php"><svg class="icon"><use href="#icon-user"/></svg>Profile</a>
+                <a href="companies.php"><svg class="icon"><use href="#icon-user"/></svg>Companies</a>
             </nav>
 
             <div class="sidebar-bottom">

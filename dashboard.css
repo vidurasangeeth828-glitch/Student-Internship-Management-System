@@ -1240,3 +1240,27 @@ tr:last-child td { border: 0; }
     .company-review-form > p { flex-basis: 100%; }
     .company-review-form .profile-field, .company-review-form > button { width: 100%; }
 }
+
+/* Company vacancy management */
+.vacancy-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+.vacancy-actions form { margin: 0; }
+.vacancy-actions .profile-cancel { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 10px 18px; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; }
+.vacancy-actions .profile-cancel:hover { background: #f5effb; }
+.vacancy-actions .vacancy-close { background: #f5eafa; color: #652b85; box-shadow: none; }
+.vacancy-actions .vacancy-close:hover { background: #ead9f5; color: #4f176f; }
+.managed-vacancy .company-vacancy-status { flex-shrink: 0; }
+.managed-vacancy .application-role { min-width: 0; }
+.managed-vacancy .application-role h2 { overflow-wrap: anywhere; }
+@media (max-width: 500px) {
+    .vacancy-actions > a, .vacancy-actions > form { flex: 1 1 100%; }
+    .vacancy-actions button { width: 100%; }
+}
+
+/* Public company directory */
+.company-directory { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+.directory-card { padding: 28px; min-width: 0; overflow-wrap: anywhere; }
+.directory-card h2 { margin: 18px 0 12px; font-size: 1.3rem; }
+.directory-description { color: var(--muted); line-height: 1.8; margin: 20px 0; white-space: normal; }
+.directory-back { margin-bottom: 24px; }
+.directory-vacancies { margin-top: 24px; }
+@media (max-width: 700px) { .company-directory { grid-template-columns: 1fr; } }

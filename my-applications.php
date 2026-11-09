@@ -98,6 +98,7 @@ $total = $applications->num_rows;
                 <?php else: ?>
                     <a href="signin.php"><svg class="icon"><use href="#icon-user"/></svg>Sign In / Sign Up</a>
                 <?php endif; ?>
+                <a href="companies.php"><svg class="icon"><use href="#icon-user"/></svg>Companies</a>
             </nav>
 
             <div class="sidebar-bottom">

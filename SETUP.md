@@ -7,7 +7,7 @@
 
 If MySQL uses a custom username, password or port, change db.php.
 
-Students register with Full name, Email, Password and Confirm password. Course / Field and Year of study are reserved for the later Profile page.
+Students register with Full name, Email, Password and Confirm password. Optional field of interest and education status are available on the Profile page.
 
 Companies register with Company name, Email, Contact number, optional Business registration number, Password and Confirm password. New companies are Pending. Their numbers are stored for later admin review, entering a registration number does not automatically verify a company.
 
@@ -19,12 +19,15 @@ The dashboard reads applications and internships from MySQL. Import the updated 
 
 Browse Internships and the Home/Dashboard search forms open internships.php. Keyword, location and category filters work together. This public page shows open, unexpired vacancies from approved active companies.
 
-Import the updated database.sql for the category column. Existing vacancies receive Other until their category is set. View details currently expands the description on the card. A separate details/application flow will be built next.
+Import the updated database.sql for the category column. Existing vacancies receive Other until their category is set. View details opens internship-details.php. Students can apply with a PDF CV and optional cover letter.
 
 My Applications opens my-applications.php. Students can view their applications and download their own CV through download-cv.php. Student profiles open student-profile.php; student-profile-process.php saves the form using the shared dashboard.css styles.
 
 Student profiles include field of interest, education status, contact number, about me, skills, and optional LinkedIn/GitHub links. The sign-in email is read-only. Course and year of study are not shown. For an existing database, re-import the updated database.sql to add the profile columns safely. Existing records are retained.
 
-Profile and My account open account.php, which includes a link back to the Student Dashboard. Companies continue to use account.php until the Company Dashboard is built.
+My account redirects students to their profile and companies to company-dashboard.php. Approved companies can post internships and review their applications.
 
 There are no seeded demo accounts. Register your own account using the form.
+
+My Vacancies opens company-vacancies.php. Companies can filter their own vacancies, edit details, close a vacancy and reopen a closed vacancy with a current deadline. Editing and reopening require an active, approved company. Archived vacancies are read-only. Closing preserves existing applications. Existing applications can be reviewed through company-applications.php.
+

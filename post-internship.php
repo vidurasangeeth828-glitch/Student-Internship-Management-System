@@ -93,9 +93,9 @@ $today = date("Y-m-d");
                 <?php if ($company["approval_status"] === "Approved"): ?>
                     <a href="post-internship.php" aria-current="page"><svg class="icon"><use href="#icon-file"/></svg>Post Internship</a>
                 <?php endif; ?>
-                <a href="company-dashboard.php#company-vacancies"><svg class="icon"><use href="#icon-search"/></svg>My Vacancies</a>
+                <a href="company-vacancies.php"><svg class="icon"><use href="#icon-search"/></svg>My Vacancies</a>
                 <a href="company-applications.php"><svg class="icon"><use href="#icon-file"/></svg>Applications</a>
-                <a href="company-dashboard.php#company-profile"><svg class="icon"><use href="#icon-user"/></svg>Company Profile</a>
+                <a href="company-profile.php"><svg class="icon"><use href="#icon-user"/></svg>Company Profile</a>
             </nav>
             <div class="sidebar-bottom">
                 <p>Find potential.<br>Build your team.</p>
@@ -111,7 +111,7 @@ $today = date("Y-m-d");
             <header class="topbar">
                 <button class="icon-button sidebar-open" type="button" aria-label="Open menu" aria-controls="student-sidebar" aria-expanded="false"><svg class="icon"><use href="#icon-menu"/></svg></button>
                 <a class="back-to-home" href="company-dashboard.php">← Back to dashboard</a>
-                <a class="account-chip surface" href="company-dashboard.php#company-profile" aria-label="Company profile: <?= e($company["company_name"]) ?>">
+                <a class="account-chip surface" href="company-profile.php" aria-label="Company profile: <?= e($company["company_name"]) ?>">
                     <span class="avatar" aria-hidden="true"><?= e(mb_strtoupper(mb_substr($company["company_name"], 0, 1))) ?></span>
                     <span class="account-copy"><strong><?= e($company["company_name"]) ?></strong><small>Company</small></span>
                 </a>
@@ -172,7 +172,7 @@ $today = date("Y-m-d");
                                 </div>
                             </div>
                             <div class="profile-form-actions">
-                                <a class="profile-cancel" href="company-dashboard.php#company-vacancies">Cancel</a>
+                                <a class="profile-cancel" href="company-vacancies.php">Cancel</a>
                                 <button class="filter-submit" type="submit">Publish internship <span aria-hidden="true">→</span></button>
                             </div>
                         </form>

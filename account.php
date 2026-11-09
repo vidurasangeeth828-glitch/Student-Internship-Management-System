@@ -19,4 +19,4 @@ if (!$user) {
 if ($user["role"] === "student") {
     redirect("student-profile.php");
 }
-redirect("company-dashboard.php");
+redirect("company-profile.php");
