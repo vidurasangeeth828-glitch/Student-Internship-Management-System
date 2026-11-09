@@ -9,7 +9,11 @@ require "db.php";
 date_default_timezone_set("Asia/Colombo");
 
 $userId = $_SESSION["user_id"];
+ 
 $stmt = $conn->prepare("SELECT u.full_name, u.role, s.student_id
+
+$stmt = $conn->prepare("SELECT u.full_name, u.role, s.student_id, s.photo_path
+ 
                         FROM users u
                         LEFT JOIN students s ON s.user_id = u.user_id
                         WHERE u.user_id = ? AND u.status = 'Active'");
@@ -23,7 +27,11 @@ if (!$user) {
 }
 
 if ($user["role"] !== "student") {
+ Nuzrath
     redirect("account.php");
+
+    redirect("company-dashboard.php");
+ main
 }
 
 if (!$user["student_id"]) {
@@ -112,10 +120,18 @@ $applications = $stmt->get_result();
     </svg>
 
     <a class="skip-link" href="#main">Skip to dashboard</a>
+ Nuzrath
     <div class="ambient ambient-purple" aria-hidden="true"></div>
     <div class="ambient ambient-lavender" aria-hidden="true"></div>
     <div class="ambient ambient-peach" aria-hidden="true"></div>
     <div class="ambient ambient-lilac" aria-hidden="true"></div>
+    <div class="applications-glows" aria-hidden="true">
+        <div class="ambient ambient-purple" aria-hidden="true"></div>
+        <div class="ambient ambient-lavender" aria-hidden="true"></div>
+        <div class="ambient ambient-peach" aria-hidden="true"></div>
+        <div class="ambient ambient-lilac" aria-hidden="true"></div>
+    </div>
+ main
 
     <div class="dashboard-layout">
         <aside class="sidebar surface" id="student-sidebar" aria-label="Student workspace">
@@ -129,6 +145,8 @@ $applications = $stmt->get_result();
                 <a href="internships.php"><svg class="icon"><use href="#icon-search"/></svg>Browse Internships</a>
                 <a href="my-applications.php"><svg class="icon"><use href="#icon-file"/></svg>My Applications</a>
                 <a href="account.php"><svg class="icon"><use href="#icon-user"/></svg>Profile</a>
+
+                <a href="student-profile.php"><svg class="icon"><use href="#icon-user"/></svg>Profile</a>
             </nav>
 
             <div class="sidebar-bottom">
@@ -153,6 +171,10 @@ $applications = $stmt->get_result();
                 </form>
                 <a class="account-chip surface" href="account.php" aria-label="My account: <?= e($user["full_name"]) ?>">
                     <span class="avatar"><?= e($initial) ?></span>
+
+                <a class="account-chip surface" href="student-profile.php" aria-label="My account: <?= e($user["full_name"]) ?>">
+                    <span class="avatar"><?php if (!empty($user["photo_path"])): ?><img src="profile-photo.php?v=<?= e(basename($user["photo_path"])) ?>" alt=""><?php else: ?><?= e($initial) ?><?php endif; ?></span>
+ 
                     <span class="account-copy"><strong><?= e($user["full_name"]) ?></strong><small>Student</small></span>
                 </a>
             </header>
@@ -238,6 +260,8 @@ $applications = $stmt->get_result();
                     <div class="section-heading"><h2>Quick links</h2></div>
                     <a href="internships.php"><svg class="icon"><use href="#icon-search"/></svg>Browse internships<span aria-hidden="true">›</span></a>
                     <a href="account.php"><svg class="icon"><use href="#icon-user"/></svg>My account<span aria-hidden="true">›</span></a>
+
+                    <a href="student-profile.php"><svg class="icon"><use href="#icon-user"/></svg>My account<span aria-hidden="true">›</span></a>
                     <a href="my-applications.php"><svg class="icon"><use href="#icon-file"/></svg>My applications<span aria-hidden="true">›</span></a>
                 </section>
             </div>

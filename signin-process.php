@@ -6,7 +6,11 @@ require "db.php";
 $email = post_text("email");
 $password = $_POST["password"] ?? "";
 
+ Nuzrath
 $stmt = $conn->prepare("SELECT user_id, password_hash FROM users WHERE email = ? AND status = 'Active'");
+
+$stmt = $conn->prepare("SELECT user_id, password_hash, role FROM users WHERE email = ? AND status = 'Active'");
+ main
 $stmt->bind_param("s", $email);
 $stmt->execute();
 $user = $stmt->get_result()->fetch_assoc();
@@ -40,15 +44,25 @@ if (isset($_SESSION["apply_after_login"]) && is_int($_SESSION["apply_after_login
 session_regenerate_id(true);
 $_SESSION = [
     "user_id" => (int) $user["user_id"],
+ Nuzrath
     "token" => bin2hex(random_bytes(32))
 ];
-<<<<<<< Updated upstream
-=======
+ Updated upstream
+
+
+    "role" => $user["role"],
+    "token" => bin2hex(random_bytes(32))
+];
+ main
 if ($user["role"] === "student") {
     if ($applyAfterLogin > 0) {
         redirect("apply.php?id=" . $applyAfterLogin);
     }
     redirect("student-dashboard.php");
 }
->>>>>>> Stashed changes
+ Nuzrath
+ Stashed changes
 redirect("account.php");
+
+redirect("company-dashboard.php");
+ main

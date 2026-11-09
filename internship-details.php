@@ -5,7 +5,11 @@ date_default_timezone_set("Asia/Colombo");
 
 $user = null;
 if (isset($_SESSION["user_id"])) {
+ Nuzrath
     $stmt = $conn->prepare("SELECT full_name, role FROM users WHERE user_id = ? AND status = 'Active'");
+=======
+    $stmt = $conn->prepare("SELECT u.full_name, u.role, s.photo_path FROM users u LEFT JOIN students s ON s.user_id = u.user_id WHERE u.user_id = ? AND u.status = 'Active'");
+ main
     $stmt->bind_param("i", $_SESSION["user_id"]);
     $stmt->execute();
     $user = $stmt->get_result()->fetch_assoc();
@@ -107,7 +111,11 @@ if ($internship && filter_var($internship["website"], FILTER_VALIDATE_URL)) {
                     <a href="my-applications.php"><svg class="icon"><use href="#icon-file"/></svg>My Applications</a>
                 <?php endif; ?>
                 <?php if ($user): ?>
+ Nuzrath
                     <a href="account.php"><svg class="icon"><use href="#icon-user"/></svg>Profile</a>
+=======
+                    <a href="<?= $user["role"] === "student" ? "student-profile.php" : "account.php" ?>"><svg class="icon"><use href="#icon-user"/></svg>Profile</a>
+ main
                 <?php else: ?>
                     <a href="signin.php"><svg class="icon"><use href="#icon-user"/></svg>Sign In / Sign Up</a>
                 <?php endif; ?>
@@ -132,8 +140,13 @@ if ($internship && filter_var($internship["website"], FILTER_VALIDATE_URL)) {
                 <button class="icon-button sidebar-open" type="button" aria-label="Open menu" aria-controls="student-sidebar" aria-expanded="false"><svg class="icon"><use href="#icon-menu"/></svg></button>
                 <a class="back-to-home" href="internships.php">← Back to internships</a>
                 <?php if ($user): ?>
+ Nuzrath
                     <a class="account-chip surface" href="account.php" aria-label="My account: <?= e($user["full_name"]) ?>">
                         <span class="avatar"><?= e(mb_strtoupper(mb_substr($user["full_name"], 0, 1))) ?></span>
+=======
+                    <a class="account-chip surface" href="<?= $user["role"] === "student" ? "student-profile.php" : "account.php" ?>" aria-label="My account: <?= e($user["full_name"]) ?>">
+                        <span class="avatar"><?php if (!empty($user["photo_path"])): ?><img src="profile-photo.php?v=<?= e(basename($user["photo_path"])) ?>" alt=""><?php else: ?><?= e(mb_strtoupper(mb_substr($user["full_name"], 0, 1))) ?><?php endif; ?></span>
+ main
                         <span class="account-copy"><strong><?= e($user["full_name"]) ?></strong><small><?= e(ucfirst($user["role"])) ?></small></span>
                     </a>
                 <?php else: ?>

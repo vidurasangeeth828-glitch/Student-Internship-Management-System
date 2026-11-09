@@ -60,3 +60,20 @@ CREATE TABLE IF NOT EXISTS applications (
     FOREIGN KEY (student_id) REFERENCES students(student_id),
     FOREIGN KEY (internship_id) REFERENCES internships(internship_id)
 ) ENGINE=InnoDB;
+ Nuzrath
+=======
+
+
+-- Student profile fields (safe to run again).
+ALTER TABLE students
+    ADD COLUMN IF NOT EXISTS field_of_interest VARCHAR(100) NOT NULL DEFAULT '',
+    ADD COLUMN IF NOT EXISTS phone VARCHAR(30) NOT NULL DEFAULT '',
+    ADD COLUMN IF NOT EXISTS about_me TEXT NULL,
+    ADD COLUMN IF NOT EXISTS education_status VARCHAR(30) NOT NULL DEFAULT '',
+    ADD COLUMN IF NOT EXISTS skills VARCHAR(500) NOT NULL DEFAULT '',
+    ADD COLUMN IF NOT EXISTS linkedin_url VARCHAR(255) NOT NULL DEFAULT '',
+    ADD COLUMN IF NOT EXISTS github_url VARCHAR(255) NOT NULL DEFAULT '';
+
+-- Student profile photo.
+ALTER TABLE students ADD COLUMN IF NOT EXISTS photo_path VARCHAR(255) NOT NULL DEFAULT '';
+ main
