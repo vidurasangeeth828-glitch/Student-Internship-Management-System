@@ -1,7 +1,10 @@
 <?php
 require "session.php";
 if (isset($_SESSION["user_id"])) {
-    redirect("account.php");
+    if (($_SESSION["role"] ?? "") === "student") {
+        redirect("student-dashboard.php");
+    }
+    redirect("company-dashboard.php");
 }
 $rememberedEmail = $_COOKIE["sims_email"] ?? "";
 if (!is_string($rememberedEmail) || !filter_var($rememberedEmail, FILTER_VALIDATE_EMAIL)) {

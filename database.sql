@@ -60,3 +60,27 @@ CREATE TABLE IF NOT EXISTS applications (
     FOREIGN KEY (student_id) REFERENCES students(student_id),
     FOREIGN KEY (internship_id) REFERENCES internships(internship_id)
 ) ENGINE=InnoDB;
+
+
+-- Student profile fields (safe to run again).
+ALTER TABLE students
+    ADD COLUMN IF NOT EXISTS field_of_interest VARCHAR(100) NOT NULL DEFAULT '',
+    ADD COLUMN IF NOT EXISTS phone VARCHAR(30) NOT NULL DEFAULT '',
+    ADD COLUMN IF NOT EXISTS about_me TEXT NULL,
+    ADD COLUMN IF NOT EXISTS education_status VARCHAR(30) NOT NULL DEFAULT '',
+    ADD COLUMN IF NOT EXISTS skills VARCHAR(500) NOT NULL DEFAULT '',
+    ADD COLUMN IF NOT EXISTS linkedin_url VARCHAR(255) NOT NULL DEFAULT '',
+    ADD COLUMN IF NOT EXISTS github_url VARCHAR(255) NOT NULL DEFAULT '';
+
+-- Student profile photo.
+ALTER TABLE students ADD COLUMN IF NOT EXISTS photo_path VARCHAR(255) NOT NULL DEFAULT '';
+
+-- Separate administrator accounts.
+CREATE TABLE IF NOT EXISTS admins (
+    admin_id INT AUTO_INCREMENT PRIMARY KEY,
+    full_name VARCHAR(120) NOT NULL,
+    email VARCHAR(180) NOT NULL UNIQUE,
+    password_hash VARCHAR(255) NOT NULL,
+    status ENUM('Active', 'Inactive') NOT NULL DEFAULT 'Active',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;

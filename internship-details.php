@@ -5,7 +5,7 @@ date_default_timezone_set("Asia/Colombo");
 
 $user = null;
 if (isset($_SESSION["user_id"])) {
-    $stmt = $conn->prepare("SELECT full_name, role FROM users WHERE user_id = ? AND status = 'Active'");
+    $stmt = $conn->prepare("SELECT u.full_name, u.role, s.photo_path FROM users u LEFT JOIN students s ON s.user_id = u.user_id WHERE u.user_id = ? AND u.status = 'Active'");
     $stmt->bind_param("i", $_SESSION["user_id"]);
     $stmt->execute();
     $user = $stmt->get_result()->fetch_assoc();
@@ -104,10 +104,10 @@ if ($internship && filter_var($internship["website"], FILTER_VALIDATE_URL)) {
                 <?php endif; ?>
                 <a href="internships.php"><svg class="icon"><use href="#icon-search"/></svg>Browse Internships</a>
                 <?php if ($user && $user["role"] === "student"): ?>
-                    <a href="student-dashboard.php#recent-applications"><svg class="icon"><use href="#icon-file"/></svg>My Applications</a>
+                    <a href="my-applications.php"><svg class="icon"><use href="#icon-file"/></svg>My Applications</a>
                 <?php endif; ?>
                 <?php if ($user): ?>
-                    <a href="account.php"><svg class="icon"><use href="#icon-user"/></svg>Profile</a>
+                    <a href="<?= $user["role"] === "student" ? "student-profile.php" : "account.php" ?>"><svg class="icon"><use href="#icon-user"/></svg>Profile</a>
                 <?php else: ?>
                     <a href="signin.php"><svg class="icon"><use href="#icon-user"/></svg>Sign In / Sign Up</a>
                 <?php endif; ?>
@@ -132,8 +132,8 @@ if ($internship && filter_var($internship["website"], FILTER_VALIDATE_URL)) {
                 <button class="icon-button sidebar-open" type="button" aria-label="Open menu" aria-controls="student-sidebar" aria-expanded="false"><svg class="icon"><use href="#icon-menu"/></svg></button>
                 <a class="back-to-home" href="internships.php">← Back to internships</a>
                 <?php if ($user): ?>
-                    <a class="account-chip surface" href="account.php" aria-label="My account: <?= e($user["full_name"]) ?>">
-                        <span class="avatar"><?= e(mb_strtoupper(mb_substr($user["full_name"], 0, 1))) ?></span>
+                    <a class="account-chip surface" href="<?= $user["role"] === "student" ? "student-profile.php" : "account.php" ?>" aria-label="My account: <?= e($user["full_name"]) ?>">
+                        <span class="avatar"><?php if (!empty($user["photo_path"])): ?><img src="profile-photo.php?v=<?= e(basename($user["photo_path"])) ?>" alt=""><?php else: ?><?= e(mb_strtoupper(mb_substr($user["full_name"], 0, 1))) ?><?php endif; ?></span>
                         <span class="account-copy"><strong><?= e($user["full_name"]) ?></strong><small><?= e(ucfirst($user["role"])) ?></small></span>
                     </a>
                 <?php else: ?>
@@ -192,13 +192,13 @@ if ($internship && filter_var($internship["website"], FILTER_VALIDATE_URL)) {
                                 <span class="status status-<?= e(strtolower($application["status"])) ?>"><?= e($application["status"]) ?></span>
                                 <small>Applied on <?= e(date("d M Y", strtotime($application["applied_at"]))) ?></small>
                             </div>
-                            <a class="detail-primary" href="student-dashboard.php#recent-applications">My applications <span aria-hidden="true">→</span></a>
+                            <a class="detail-primary" href="my-applications.php">My applications <span aria-hidden="true">→</span></a>
                         <?php elseif (!$user): ?>
-                            <a class="detail-primary" href="signin.php">Sign in as a student <span aria-hidden="true">→</span></a>
-                            <p class="detail-note action-note">Online applications are coming soon.</p>
+                            <a class="detail-primary" href="apply.php?id=<?= e($internshipId) ?>">Sign in to apply <span aria-hidden="true">→</span></a>
+                            <p class="detail-note action-note">Sign in with your student account to submit your CV.</p>
                         <?php elseif ($user["role"] === "student"): ?>
-                            <button class="detail-primary" type="button" disabled aria-describedby="apply-note">Apply now · Coming soon</button>
-                            <p class="detail-note action-note" id="apply-note">Online applications will be available in the next update.</p>
+                            <a class="detail-primary" href="apply.php?id=<?= e($internshipId) ?>">Apply now <span aria-hidden="true">→</span></a>
+                            <p class="detail-note action-note">Upload your CV and send your application.</p>
                         <?php else: ?>
                             <p class="detail-note action-note">Applications are available to student accounts only.</p>
                         <?php endif; ?>

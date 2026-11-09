@@ -5,7 +5,7 @@ date_default_timezone_set("Asia/Colombo");
 
 $user = null;
 if (isset($_SESSION["user_id"])) {
-    $stmt = $conn->prepare("SELECT full_name, role FROM users WHERE user_id = ? AND status = 'Active'");
+    $stmt = $conn->prepare("SELECT u.full_name, u.role, s.photo_path FROM users u LEFT JOIN students s ON s.user_id = u.user_id WHERE u.user_id = ? AND u.status = 'Active'");
     $stmt->bind_param("i", $_SESSION["user_id"]);
     $stmt->execute();
     $user = $stmt->get_result()->fetch_assoc();
@@ -93,10 +93,12 @@ $locations = $stmt->get_result();
         <symbol id="icon-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
     </svg>
     <a class="skip-link" href="#main">Skip to internships</a>
-    <div class="ambient ambient-purple" aria-hidden="true"></div>
-    <div class="ambient ambient-lavender" aria-hidden="true"></div>
-    <div class="ambient ambient-peach" aria-hidden="true"></div>
-    <div class="ambient ambient-lilac" aria-hidden="true"></div>
+    <div class="applications-glows" aria-hidden="true">
+        <div class="ambient ambient-purple" aria-hidden="true"></div>
+        <div class="ambient ambient-lavender" aria-hidden="true"></div>
+        <div class="ambient ambient-peach" aria-hidden="true"></div>
+        <div class="ambient ambient-lilac" aria-hidden="true"></div>
+    </div>
 
     <div class="dashboard-layout">
         <aside class="sidebar surface" id="student-sidebar" aria-label="SIMS navigation">
@@ -113,10 +115,10 @@ $locations = $stmt->get_result();
                 <?php endif; ?>
                 <a href="internships.php" aria-current="page"><svg class="icon"><use href="#icon-search"/></svg>Browse Internships</a>
                 <?php if ($user && $user["role"] === "student"): ?>
-                    <a href="student-dashboard.php#recent-applications"><svg class="icon"><use href="#icon-file"/></svg>My Applications</a>
+                    <a href="my-applications.php"><svg class="icon"><use href="#icon-file"/></svg>My Applications</a>
                 <?php endif; ?>
                 <?php if ($user): ?>
-                    <a href="account.php"><svg class="icon"><use href="#icon-user"/></svg>Profile</a>
+                    <a href="<?= $user["role"] === "student" ? "student-profile.php" : "account.php" ?>"><svg class="icon"><use href="#icon-user"/></svg>Profile</a>
                 <?php else: ?>
                     <a href="signin.php"><svg class="icon"><use href="#icon-user"/></svg>Sign In / Sign Up</a>
                 <?php endif; ?>
@@ -141,8 +143,8 @@ $locations = $stmt->get_result();
                 <button class="icon-button sidebar-open" type="button" aria-label="Open menu" aria-controls="student-sidebar" aria-expanded="false"><svg class="icon"><use href="#icon-menu"/></svg></button>
                 <a class="back-to-home" href="index.php">← Back to home</a>
                 <?php if ($user): ?>
-                    <a class="account-chip surface" href="account.php" aria-label="My account: <?= e($user["full_name"]) ?>">
-                        <span class="avatar"><?= e(mb_strtoupper(mb_substr($user["full_name"], 0, 1))) ?></span>
+                    <a class="account-chip surface" href="<?= $user["role"] === "student" ? "student-profile.php" : "account.php" ?>" aria-label="My account: <?= e($user["full_name"]) ?>">
+                        <span class="avatar"><?php if (!empty($user["photo_path"])): ?><img src="profile-photo.php?v=<?= e(basename($user["photo_path"])) ?>" alt=""><?php else: ?><?= e(mb_strtoupper(mb_substr($user["full_name"], 0, 1))) ?><?php endif; ?></span>
                         <span class="account-copy"><strong><?= e($user["full_name"]) ?></strong><small><?= e(ucfirst($user["role"])) ?></small></span>
                     </a>
                 <?php else: ?>

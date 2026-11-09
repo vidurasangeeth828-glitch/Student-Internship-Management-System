@@ -1,7 +1,10 @@
 <?php
 require "session.php";
 if (isset($_SESSION["user_id"])) {
-    redirect("account.php");
+    if (($_SESSION["role"] ?? "") === "student") {
+        redirect("student-dashboard.php");
+    }
+    redirect("company-dashboard.php");
 }
 $old = $_SESSION["signup_values"] ?? [];
 unset($_SESSION["signup_values"]);
