@@ -8,10 +8,14 @@ if (!isset($_SESSION["user_id"])) {
 require "db.php";
 date_default_timezone_set("Asia/Colombo");
 
+ nethmi
+$stmt = $conn->prepare("SELECT u.full_name, u.role, s.student_id, s.photo_path
+=======
  Nuzrath
 $stmt = $conn->prepare("SELECT u.full_name, u.role, s.student_id
 
 $stmt = $conn->prepare("SELECT u.full_name, u.role, s.student_id, s.photo_path
+ main
  main
                         FROM users u
                         LEFT JOIN students s ON s.user_id = u.user_id
@@ -98,10 +102,14 @@ $total = $applications->num_rows;
                     <a href="my-applications.php" aria-current="page"><svg class="icon"><use href="#icon-file"/></svg>My Applications</a>
                 <?php endif; ?>
                 <?php if ($user): ?>
+ nethmi
+                    <a href="student-profile.php"><svg class="icon"><use href="#icon-user"/></svg>Profile</a>
+=======
  Nuzrath
                     <a href="account.php"><svg class="icon"><use href="#icon-user"/></svg>Profile</a>
 
                     <a href="student-profile.php"><svg class="icon"><use href="#icon-user"/></svg>Profile</a>
+ main
  main
                 <?php else: ?>
                     <a href="signin.php"><svg class="icon"><use href="#icon-user"/></svg>Sign In / Sign Up</a>
@@ -127,12 +135,17 @@ $total = $applications->num_rows;
                 <button class="icon-button sidebar-open" type="button" aria-label="Open menu" aria-controls="student-sidebar" aria-expanded="false"><svg class="icon"><use href="#icon-menu"/></svg></button>
                 <a class="back-to-home" href="student-dashboard.php">← Back to dashboard</a>
                 <?php if ($user): ?>
+ nethmi
+                    <a class="account-chip surface" href="student-profile.php" aria-label="My account: <?= e($user["full_name"]) ?>">
+                        <span class="avatar"><?php if (!empty($user["photo_path"])): ?><img src="profile-photo.php?v=<?= e(basename($user["photo_path"])) ?>" alt=""><?php else: ?><?= e(mb_strtoupper(mb_substr($user["full_name"], 0, 1))) ?><?php endif; ?></span>
+=======
  Nuzrath
                     <a class="account-chip surface" href="account.php" aria-label="My account: <?= e($user["full_name"]) ?>">
                         <span class="avatar"><?= e(mb_strtoupper(mb_substr($user["full_name"], 0, 1))) ?></span>
 =======
                     <a class="account-chip surface" href="student-profile.php" aria-label="My account: <?= e($user["full_name"]) ?>">
                         <span class="avatar"><?php if (!empty($user["photo_path"])): ?><img src="profile-photo.php?v=<?= e(basename($user["photo_path"])) ?>" alt=""><?php else: ?><?= e(mb_strtoupper(mb_substr($user["full_name"], 0, 1))) ?><?php endif; ?></span>
+ main
  main
                         <span class="account-copy"><strong><?= e($user["full_name"]) ?></strong><small><?= e(ucfirst($user["role"])) ?></small></span>
                     </a>

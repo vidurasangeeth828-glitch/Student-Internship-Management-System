@@ -1,6 +1,9 @@
 # SIMS authentication
 
 1. Start Apache and MySQL in XAMPP.
+2. Open http://localhost/phpmyadmin/ and import database.sql once. It creates the sims database with users, students, companies, internships and applications tables.
+3. Open http://localhost/webproject/Student-Internship-Management-System/ and click Sign In / Sign Up.
+
  Nuzrath
 2. Open http://localhost/phpmyadmin/ and import database.sql once. It creates the sims database with users, students and companies tables.
 3. Open http://localhost/sims/ and click Sign In / Sign Up.
@@ -20,6 +23,8 @@ Students register with Full name, Email, Password and Confirm password. Course /
 Companies register with Company name, Email, Contact number, optional Business registration number, Password and Confirm password. New companies are Pending. Their numbers are stored for later admin review, entering a registration number does not automatically verify a company.
 
 Remember email saves the sign-in email in a 30-day cookie. It does not store the password.
+
+Students reach student-dashboard.php after login. The dashboard uses dashboard.css for the solid cards, grid and colored glows, and dashboard.js for the mobile sidebar.
 
  Nuzrath
  Nuzrath
@@ -42,6 +47,17 @@ Browse Internships and the Home/Dashboard search forms open internships.php. Key
 
 Import the updated database.sql for the category column. Existing vacancies receive Other until their category is set. View details currently expands the description on the card. A separate details/application flow will be built next.
 
+ nethmi
+ Updated upstream
+My Applications currently jumps to the dashboard applications section. The separate application tracker and editable profile pages will be built in the next stage.
+=======
+My Applications opens my-applications.php. Students can view their applications and download their own CV through download-cv.php. Student profiles open student-profile.php; student-profile-process.php saves the form using the shared dashboard.css styles.
+
+Student profiles include field of interest, education status, contact number, about me, skills, and optional LinkedIn/GitHub links. The sign-in email is read-only. Course and year of study are not shown. For an existing database, re-import the updated database.sql to add the profile columns safely. Existing records are retained.
+ Stashed changes
+
+Profile and My account open account.php, which includes a link back to the Student Dashboard. Companies continue to use account.php until the Company Dashboard is built.
+
  Nuzrath
 My Applications currently jumps to the dashboard applications section. The separate application tracker and editable profile pages will be built in the next stage.
 
@@ -57,6 +73,7 @@ My Applications opens my-applications.php. Students can view their applications 
 Student profiles include field of interest, education status, contact number, about me, skills, and optional LinkedIn/GitHub links. The sign-in email is read-only. Course and year of study are not shown. For an existing database, re-import the updated database.sql to add the profile columns safely. Existing records are retained.
 
 Profile and My account open account.php, which includes a link back to the Student Dashboard. Companies continue to use account.php until the Company Dashboard is built.
+ main
  main
 
 There are no seeded demo accounts. Register your own account using the form.

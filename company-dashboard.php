@@ -29,6 +29,9 @@ if (!$company["company_id"]) {
     exit("Your company profile could not be found. Please contact the administrator.");
 }
 
+$postedId = $_SESSION["vacancy_posted"] ?? 0;
+unset($_SESSION["vacancy_posted"]);
+
 $companyId = $company["company_id"];
 $today = date("Y-m-d");
 $showAll = isset($_GET["all"]) && $_GET["all"] === "1";
@@ -116,6 +119,11 @@ $vacancies = $stmt->get_result();
             </div>
             <nav class="sidebar-nav" aria-label="Company navigation">
                 <a href="company-dashboard.php" aria-current="page"><svg class="icon"><use href="#icon-home"/></svg>Dashboard</a>
+                <?php if ($company["approval_status"] === "Approved"): ?>
+                    <a href="post-internship.php"><svg class="icon"><use href="#icon-file"/></svg>Post Internship</a>
+                <?php endif; ?>
+
+ 
                 <a href="#company-vacancies"><svg class="icon"><use href="#icon-search"/></svg>My Vacancies</a>
                 <a href="#company-applications"><svg class="icon"><use href="#icon-file"/></svg>Applications</a>
                 <a href="#company-profile"><svg class="icon"><use href="#icon-user"/></svg>Company Profile</a>
@@ -147,6 +155,12 @@ $vacancies = $stmt->get_result();
                     <p class="company-subtitle">Follow your vacancies and meet your next team members.</p>
                 </div>
                 <div class="company-post-action">
+                    <?php if ($company["approval_status"] === "Approved"): ?>
+                        <a class="filter-submit company-post-link" href="post-internship.php">Post Internship <span aria-hidden="true">+</span></a>
+                    <?php else: ?>
+                        <button class="filter-submit" type="button" disabled aria-describedby="posting-note">Post Internship <span aria-hidden="true">+</span></button>
+                        <p id="posting-note">Admin approval is required to post internships.</p>
+                    <?php endif; ?>
                     <button class="filter-submit" type="button" disabled aria-describedby="posting-note">Post Internship <span aria-hidden="true">+</span></button>
                     <p id="posting-note">Posting will be available in the next update.</p>
                 </div>
@@ -166,6 +180,14 @@ $vacancies = $stmt->get_result();
                 </div>
                 <span class="company-approval-badge"><?= e($company["approval_status"]) ?></span>
             </section>
+
+            <?php if ($postedId): ?>
+                <div class="profile-success post-success" role="status">
+                    <span>Your internship has been published.</span>
+                    <a href="internship-details.php?id=<?= e($postedId) ?>">View public listing <span aria-hidden="true">↗</span></a>
+                </div>
+            <?php endif; ?>
+
 
             <section class="stats" aria-label="Company overview">
                 <article class="stat surface"><span class="stat-icon"><svg class="icon" aria-hidden="true"><use href="#icon-search"/></svg></span><div><strong><?= $vacancyCounts["total"] ?></strong><p>Total vacancies</p></div></article>

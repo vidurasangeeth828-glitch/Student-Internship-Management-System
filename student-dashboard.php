@@ -9,11 +9,15 @@ require "db.php";
 date_default_timezone_set("Asia/Colombo");
 
 $userId = $_SESSION["user_id"];
+ nethmi
+$stmt = $conn->prepare("SELECT u.full_name, u.role, s.student_id, s.photo_path
+=======
  
 $stmt = $conn->prepare("SELECT u.full_name, u.role, s.student_id
 
 $stmt = $conn->prepare("SELECT u.full_name, u.role, s.student_id, s.photo_path
  
+ main
                         FROM users u
                         LEFT JOIN students s ON s.user_id = u.user_id
                         WHERE u.user_id = ? AND u.status = 'Active'");
@@ -27,10 +31,14 @@ if (!$user) {
 }
 
 if ($user["role"] !== "student") {
+ nethmi
+    redirect("company-dashboard.php");
+=======
  Nuzrath
     redirect("account.php");
 
     redirect("company-dashboard.php");
+ main
  main
 }
 
@@ -120,17 +128,27 @@ $applications = $stmt->get_result();
     </svg>
 
     <a class="skip-link" href="#main">Skip to dashboard</a>
+ nethmi
+ Updated upstream
+=======
  Nuzrath
+ main
     <div class="ambient ambient-purple" aria-hidden="true"></div>
     <div class="ambient ambient-lavender" aria-hidden="true"></div>
     <div class="ambient ambient-peach" aria-hidden="true"></div>
     <div class="ambient ambient-lilac" aria-hidden="true"></div>
+=======
+=======
     <div class="applications-glows" aria-hidden="true">
         <div class="ambient ambient-purple" aria-hidden="true"></div>
         <div class="ambient ambient-lavender" aria-hidden="true"></div>
         <div class="ambient ambient-peach" aria-hidden="true"></div>
         <div class="ambient ambient-lilac" aria-hidden="true"></div>
     </div>
+ nethmi
+ Stashed changes
+=======
+ main
  main
 
     <div class="dashboard-layout">
@@ -143,10 +161,20 @@ $applications = $stmt->get_result();
             <nav class="sidebar-nav" aria-label="Student navigation">
                 <a href="student-dashboard.php" aria-current="page"><svg class="icon"><use href="#icon-home"/></svg>Dashboard</a>
                 <a href="internships.php"><svg class="icon"><use href="#icon-search"/></svg>Browse Internships</a>
+ nethmi
+ Updated upstream
+                <a href="#recent-applications"><svg class="icon"><use href="#icon-file"/></svg>My Applications</a>
+                <a href="account.php"><svg class="icon"><use href="#icon-user"/></svg>Profile</a>
+=======
+                <a href="my-applications.php"><svg class="icon"><use href="#icon-file"/></svg>My Applications</a>
+                <a href="student-profile.php"><svg class="icon"><use href="#icon-user"/></svg>Profile</a>
+ Stashed changes
+=======
                 <a href="my-applications.php"><svg class="icon"><use href="#icon-file"/></svg>My Applications</a>
                 <a href="account.php"><svg class="icon"><use href="#icon-user"/></svg>Profile</a>
 
                 <a href="student-profile.php"><svg class="icon"><use href="#icon-user"/></svg>Profile</a>
+ main
             </nav>
 
             <div class="sidebar-bottom">
@@ -169,6 +197,14 @@ $applications = $stmt->get_result();
                     <input id="internship-search" name="keyword" placeholder="Search internships..." maxlength="100" value="<?= e($keyword) ?>">
                     <button type="submit" aria-label="Search"><svg class="icon small-icon"><use href="#icon-arrow"/></svg></button>
                 </form>
+ Updated upstream
+                <a class="account-chip surface" href="account.php" aria-label="My account: <?= e($user["full_name"]) ?>">
+                    <span class="avatar"><?= e($initial) ?></span>
+=======
+                <a class="account-chip surface" href="student-profile.php" aria-label="My account: <?= e($user["full_name"]) ?>">
+                    <span class="avatar"><?php if (!empty($user["photo_path"])): ?><img src="profile-photo.php?v=<?= e(basename($user["photo_path"])) ?>" alt=""><?php else: ?><?= e($initial) ?><?php endif; ?></span>
+ Stashed changes
+=======
                 <a class="account-chip surface" href="account.php" aria-label="My account: <?= e($user["full_name"]) ?>">
                     <span class="avatar"><?= e($initial) ?></span>
 
@@ -259,6 +295,15 @@ $applications = $stmt->get_result();
                 <section class="panel surface quick-links">
                     <div class="section-heading"><h2>Quick links</h2></div>
                     <a href="internships.php"><svg class="icon"><use href="#icon-search"/></svg>Browse internships<span aria-hidden="true">›</span></a>
+ nethmi
+ Updated upstream
+                    <a href="account.php"><svg class="icon"><use href="#icon-user"/></svg>My account<span aria-hidden="true">›</span></a>
+                    <a href="#recent-applications"><svg class="icon"><use href="#icon-file"/></svg>My applications<span aria-hidden="true">›</span></a>
+
+                    <a href="student-profile.php"><svg class="icon"><use href="#icon-user"/></svg>My account<span aria-hidden="true">›</span></a>
+                    <a href="my-applications.php"><svg class="icon"><use href="#icon-file"/></svg>My applications<span aria-hidden="true">›</span></a>
+ Stashed changes
+=======
                     <a href="account.php"><svg class="icon"><use href="#icon-user"/></svg>My account<span aria-hidden="true">›</span></a>
 
                     <a href="student-profile.php"><svg class="icon"><use href="#icon-user"/></svg>My account<span aria-hidden="true">›</span></a>
@@ -761,10 +806,14 @@ $applications = $stmt->get_result();
                     <a href="internships.php"><svg class="icon"><use href="#icon-search"/></svg>Browse internships<span aria-hidden="true">›</span></a>
                     <a href="student-profile.php"><svg class="icon"><use href="#icon-user"/></svg>My account<span aria-hidden="true">›</span></a>
                     <a href="my-applications.php"><svg class="icon"><use href="#icon-file"/></svg>My applications<span aria-hidden="true">›</span></a>
+ main
                 </section>
             </div>
         </main>
     </div>
 </body>
 </html>
+ nethmi
+=======
+ main
  main

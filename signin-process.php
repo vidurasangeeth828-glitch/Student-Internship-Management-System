@@ -6,6 +6,8 @@ require "db.php";
 $email = post_text("email");
 $password = $_POST["password"] ?? "";
 
+ nethmi
+=======
  Nuzrath
 $stmt = $conn->prepare("SELECT user_id, password_hash FROM users WHERE email = ? AND status = 'Active'");
 
@@ -78,6 +80,7 @@ $password = $_POST["password"] ?? "";
 
 $stmt = $conn->prepare("SELECT user_id, password_hash FROM users WHERE email = ? AND status = 'Active'");
 
+ main
 $stmt = $conn->prepare("SELECT user_id, password_hash, role FROM users WHERE email = ? AND status = 'Active'");
 $stmt->bind_param("s", $email);
 $stmt->execute();
@@ -104,6 +107,8 @@ if (post_text("remember_email") === "1") {
     ]);
 }
 
+ nethmi
+=======
 session_regenerate_id(true);
 $_SESSION = [
     "user_id" => (int) $user["user_id"],
@@ -164,6 +169,7 @@ if ($user["role"] === "student") {
 }
 redirect("account.php");
 
+ main
 $applyAfterLogin = 0;
 if (isset($_SESSION["apply_after_login"]) && is_int($_SESSION["apply_after_login"])) {
     $applyAfterLogin = $_SESSION["apply_after_login"];

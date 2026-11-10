@@ -5,7 +5,10 @@ if (!isset($_SESSION["user_id"])) {
 }
 require "db.php";
 
+ nethmi
+=======
 $stmt = $conn->prepare("SELECT u.full_name, u.role, c.approval_status FROM users u
+ main
 $stmt = $conn->prepare("SELECT u.full_name, u.email, u.role, c.approval_status FROM users u
                         LEFT JOIN companies c ON c.user_id = u.user_id
                         WHERE u.user_id = ? AND u.status = 'Active'");
@@ -17,6 +20,8 @@ if (!$user) {
     unset($_SESSION["user_id"]);
     redirect("signin.php");
 }
+ nethmi
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,6 +51,7 @@ if (!$user) {
 </body>
 </html>
 
+ main
 if ($user["role"] === "student") {
     redirect("student-profile.php");
 }

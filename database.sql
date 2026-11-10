@@ -60,6 +60,8 @@ CREATE TABLE IF NOT EXISTS applications (
     FOREIGN KEY (student_id) REFERENCES students(student_id),
     FOREIGN KEY (internship_id) REFERENCES internships(internship_id)
 ) ENGINE=InnoDB;
+ nethmi
+=======
  Nuzrath
 
 

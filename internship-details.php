@@ -1,3 +1,4 @@
+=======
  Nuzrath
 <?php
 require "session.php";
@@ -454,6 +455,7 @@ if ($internship && filter_var($internship["website"], FILTER_VALIDATE_URL)) {
 </body>
 </html>
 
+ main
 <?php
 require "session.php";
 require "db.php";

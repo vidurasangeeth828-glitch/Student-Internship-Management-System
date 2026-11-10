@@ -80,6 +80,8 @@ h1, h2, h3, p { margin: 0; }
 }
 .dashboard-layout {
     display: grid;
+ nethmi
+
  Nuzrath
     grid-template-columns: 224px minmax(0, 1fr);
     gap: 24px;
@@ -97,6 +99,7 @@ h1, h2, h3, p { margin: 0; }
     padding: 24px 13px 12px;
     border-radius: 29px;
 =======
+ main
     grid-template-columns: 244px minmax(0, 1fr);
     min-height: 100svh;
 }
@@ -114,6 +117,9 @@ h1, h2, h3, p { margin: 0; }
     border-radius: 0;
     box-shadow: none;
     overflow-y: auto;
+ nethmi
+=======
+ main
  main
 }
 .sidebar-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
@@ -144,10 +150,14 @@ h1, h2, h3, p { margin: 0; }
 .sidebar-bottom form { border-top: 1px solid #e4d5f4; padding-top: 8px; }
 .sidebar-bottom button { width: 100%; border: 0; background: transparent; text-align: left; }
 .sidebar-bottom button:hover { background: #f0e6fb; }
+ nethmi
+.workspace { grid-column: 2; min-width: 0; display: grid; gap: 19px; align-content: start; padding: 24px 28px 32px; }
+
  Nuzrath
 .workspace { min-width: 0; display: grid; gap: 19px; align-content: start; }
 =======
 .workspace { grid-column: 2; min-width: 0; display: grid; gap: 19px; align-content: start; padding: 24px 28px 32px; }
+ main
  main
 .topbar { display: flex; align-items: center; justify-content: space-between; gap: 15px; }
 .search-box {
@@ -227,6 +237,11 @@ tr:last-child td { border: 0; }
 .icon-button { display: none; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid #e7daf2; border-radius: 13px; background: #ffffff; color: var(--purple); flex-shrink: 0; }
 .sidebar-overlay { position: fixed; z-index: 9; inset: 0; background: #2d123b40; }
 @media (max-width: 1150px) {
+ nethmi
+    .dashboard-layout { grid-template-columns: 224px minmax(0, 1fr); }
+    .sidebar { width: 224px; padding-inline: 12px; }
+    .workspace { padding: 22px; }
+=======
  Nuzrath
     .dashboard-layout { grid-template-columns: 205px minmax(0, 1fr); gap: 17px; padding: 16px; }
     .sidebar { top: 16px; min-height: calc(100svh - 32px); padding-inline: 9px; }
@@ -234,6 +249,7 @@ tr:last-child td { border: 0; }
     .dashboard-layout { grid-template-columns: 224px minmax(0, 1fr); }
     .sidebar { width: 224px; padding-inline: 12px; }
     .workspace { padding: 22px; }
+ main
  main
     .sidebar-nav a { font-size: .86rem; gap: 9px; }
     .stat { padding: 15px; gap: 10px; }
@@ -250,16 +266,22 @@ tr:last-child td { border: 0; }
     .sidebar {
         position: fixed;
         z-index: 10;
+ nethmi
+=======
  Nuzrath
         left: 12px;
         top: 12px;
         bottom: 12px;
         width: min(270px, calc(100vw - 40px));
 =======
+ main
         left: 0;
         top: 0;
         bottom: 0;
         width: min(280px, calc(100vw - 40px));
+ nethmi
+=======
+ main
  main
         min-height: 0;
         background: #ffffff;
@@ -276,10 +298,14 @@ tr:last-child td { border: 0; }
     .welcome { padding-top: 14px; }
 }
 @media (max-width: 600px) {
+ nethmi
+    .workspace { padding: 16px; }
+=======
  Nuzrath
     .dashboard-layout { padding: 13px; }
 =======
     .workspace { padding: 16px; }
+ main
  main
     .workspace { gap: 15px; }
     .topbar { gap: 8px; }
@@ -409,6 +435,11 @@ tr:last-child td { border: 0; }
     .listing-caption { font-size: .73rem; }
     .listing-card { padding: 19px; }
 }
+ nethmi
+ Updated upstream
+=======
+=======
+ main
 
 /* My Applications uses the shared dashboard theme. */
 .applications-glows {
@@ -644,8 +675,11 @@ tr:last-child td { border: 0; }
     }
 }
 
+ nethmi
+=======
  Nuzrath
 =======
+ main
 
 /* Student profile */
 .profile-header {
@@ -1207,6 +1241,31 @@ tr:last-child td { border: 0; }
         grid-template-columns: 1fr;
     }
 }
+ nethmi
+
+/* Post Internship */
+.company-post-link:hover { color: white; text-decoration: none; }
+.post-layout { display: grid; grid-template-columns: minmax(0, 1fr) 285px; gap: 22px; align-items: start; }
+.post-error-summary { margin-bottom: 24px; }
+.post-guidance { padding: 25px; }
+.post-guidance h2 { font-size: 1.12rem; line-height: 1.5; }
+.post-guidance > p, .post-guidance li { font-size: .87rem; color: var(--muted); line-height: 1.8; }
+.post-guidance > p { margin-top: 12px; }
+.post-guidance ul { padding-left: 20px; margin-block: 18px; }
+.post-guidance li + li { margin-top: 10px; }
+.post-company-note { border-top: 1px solid var(--border); padding-top: 18px; overflow-wrap: anywhere; }
+.post-company-note strong { font-size: .95rem; }
+.post-company-note span { display: block; font-size: .8rem; color: var(--muted); line-height: 1.6; margin-top: 8px; }
+.post-success { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.post-success a { display: inline-flex; align-items: center; gap: 6px; min-height: 36px; font-weight: 600; }
+.post-approval-empty { padding: 45px 22px; }
+.post-approval-empty h2 { font-size: 1.3rem; }
+.post-approval-empty .filter-submit { margin-top: 20px; color: white; }
+@media (max-width: 1100px) {
+    .post-layout { grid-template-columns: 1fr; }
+}
+ Stashed changes
+=======
  main
 =======
 :root {
@@ -2407,3 +2466,4 @@ tr:last-child td { border: 0; }
         grid-template-columns: 1fr;
     }
 }
+ main

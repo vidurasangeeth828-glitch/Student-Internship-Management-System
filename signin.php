@@ -1,6 +1,8 @@
 <?php
 require "session.php";
 if (isset($_SESSION["user_id"])) {
+ nethmi
+=======
  Nuzrath
     redirect("account.php");
     if (($_SESSION["role"] ?? "") === "student") {
@@ -74,6 +76,7 @@ if (isset($_SESSION["user_id"])) {
     redirect("account.php");
 
 if (isset($_SESSION["user_id"])) {
+ main
     if (($_SESSION["role"] ?? "") === "student") {
         redirect("student-dashboard.php");
     }
