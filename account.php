@@ -6,6 +6,7 @@ if (!isset($_SESSION["user_id"])) {
 require "db.php";
 
 $stmt = $conn->prepare("SELECT u.full_name, u.role, c.approval_status FROM users u
+$stmt = $conn->prepare("SELECT u.full_name, u.email, u.role, c.approval_status FROM users u
                         LEFT JOIN companies c ON c.user_id = u.user_id
                         WHERE u.user_id = ? AND u.status = 'Active'");
 $stmt->bind_param("i", $_SESSION["user_id"]);
@@ -44,3 +45,8 @@ if (!$user) {
     </main>
 </body>
 </html>
+
+if ($user["role"] === "student") {
+    redirect("student-profile.php");
+}
+redirect("company-dashboard.php");

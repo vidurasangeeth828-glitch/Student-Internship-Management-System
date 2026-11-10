@@ -1,14 +1,21 @@
 <?php
 require "session.php";
-<<<<<<< Updated upstream
+ hashen
+ Updated upstream
 if (isset($_SESSION["user_id"])) {
 =======
 if (isset($_SESSION["user_id"])) {
     if (($_SESSION["role"] ?? "") === "student") {
         redirect("student-dashboard.php");
     }
->>>>>>> Stashed changes
+ Stashed changes
     redirect("account.php");
+
+if (isset($_SESSION["user_id"])) {
+    if (($_SESSION["role"] ?? "") === "student") {
+        redirect("student-dashboard.php");
+    }
+    redirect("company-dashboard.php");
 }
 $old = $_SESSION["signup_values"] ?? [];
 unset($_SESSION["signup_values"]);

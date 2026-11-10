@@ -1,14 +1,19 @@
 <?php
 require "session.php";
-<<<<<<< Updated upstream
+ 
 if (isset($_SESSION["user_id"])) {
-=======
+
 if (isset($_SESSION["user_id"])) {
     if (($_SESSION["role"] ?? "") === "student") {
         redirect("student-dashboard.php");
     }
->>>>>>> Stashed changes
     redirect("account.php");
+
+if (isset($_SESSION["user_id"])) {
+    if (($_SESSION["role"] ?? "") === "student") {
+        redirect("student-dashboard.php");
+    }
+    redirect("company-dashboard.php");
 }
 $rememberedEmail = $_COOKIE["sims_email"] ?? "";
 if (!is_string($rememberedEmail) || !filter_var($rememberedEmail, FILTER_VALIDATE_EMAIL)) {
