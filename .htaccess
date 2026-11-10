@@ -1,3 +1,8 @@
 <FilesMatch "^(database\.sql|db\.php|session\.php|SETUP\.md)$">
     Require all denied
 </FilesMatch>
+
+
+
+RedirectMatch 403 "(?i)/\.git(?:/|$)"
+ 
