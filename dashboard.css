@@ -80,6 +80,8 @@ h1, h2, h3, p { margin: 0; }
 }
 .dashboard-layout {
     display: grid;
+ chamodya
+=======
  nethmi
 
  Nuzrath
@@ -100,6 +102,7 @@ h1, h2, h3, p { margin: 0; }
     border-radius: 29px;
 =======
  main
+ main
     grid-template-columns: 244px minmax(0, 1fr);
     min-height: 100svh;
 }
@@ -117,8 +120,11 @@ h1, h2, h3, p { margin: 0; }
     border-radius: 0;
     box-shadow: none;
     overflow-y: auto;
+ chamodya
+=======
  nethmi
 =======
+ main
  main
  main
 }
@@ -150,6 +156,9 @@ h1, h2, h3, p { margin: 0; }
 .sidebar-bottom form { border-top: 1px solid #e4d5f4; padding-top: 8px; }
 .sidebar-bottom button { width: 100%; border: 0; background: transparent; text-align: left; }
 .sidebar-bottom button:hover { background: #f0e6fb; }
+ chamodya
+.workspace { grid-column: 2; min-width: 0; display: grid; gap: 19px; align-content: start; padding: 24px 28px 32px; }
+=======
  nethmi
 .workspace { grid-column: 2; min-width: 0; display: grid; gap: 19px; align-content: start; padding: 24px 28px 32px; }
 
@@ -157,6 +166,7 @@ h1, h2, h3, p { margin: 0; }
 .workspace { min-width: 0; display: grid; gap: 19px; align-content: start; }
 =======
 .workspace { grid-column: 2; min-width: 0; display: grid; gap: 19px; align-content: start; padding: 24px 28px 32px; }
+ main
  main
  main
 .topbar { display: flex; align-items: center; justify-content: space-between; gap: 15px; }
@@ -237,18 +247,24 @@ tr:last-child td { border: 0; }
 .icon-button { display: none; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid #e7daf2; border-radius: 13px; background: #ffffff; color: var(--purple); flex-shrink: 0; }
 .sidebar-overlay { position: fixed; z-index: 9; inset: 0; background: #2d123b40; }
 @media (max-width: 1150px) {
+ chamodya
+    .dashboard-layout { grid-template-columns: 224px minmax(0, 1fr); }
+    .sidebar { width: 224px; padding-inline: 12px; }
+    .workspace { padding: 22px; }
+
  nethmi
     .dashboard-layout { grid-template-columns: 224px minmax(0, 1fr); }
     .sidebar { width: 224px; padding-inline: 12px; }
     .workspace { padding: 22px; }
-=======
+
  Nuzrath
     .dashboard-layout { grid-template-columns: 205px minmax(0, 1fr); gap: 17px; padding: 16px; }
     .sidebar { top: 16px; min-height: calc(100svh - 32px); padding-inline: 9px; }
-=======
+
     .dashboard-layout { grid-template-columns: 224px minmax(0, 1fr); }
     .sidebar { width: 224px; padding-inline: 12px; }
     .workspace { padding: 22px; }
+ main
  main
  main
     .sidebar-nav a { font-size: .86rem; gap: 9px; }
@@ -266,6 +282,8 @@ tr:last-child td { border: 0; }
     .sidebar {
         position: fixed;
         z-index: 10;
+ chamodya
+=======
  nethmi
 =======
  Nuzrath
@@ -275,12 +293,16 @@ tr:last-child td { border: 0; }
         width: min(270px, calc(100vw - 40px));
 =======
  main
+ main
         left: 0;
         top: 0;
         bottom: 0;
         width: min(280px, calc(100vw - 40px));
+ chamodya
+=======
  nethmi
 =======
+ main
  main
  main
         min-height: 0;
@@ -298,15 +320,7 @@ tr:last-child td { border: 0; }
     .welcome { padding-top: 14px; }
 }
 @media (max-width: 600px) {
- nethmi
     .workspace { padding: 16px; }
-=======
- Nuzrath
-    .dashboard-layout { padding: 13px; }
-=======
-    .workspace { padding: 16px; }
- main
- main
     .workspace { gap: 15px; }
     .topbar { gap: 8px; }
     .search-box { min-width: 0; padding-left: 11px; gap: 6px; }
@@ -435,10 +449,13 @@ tr:last-child td { border: 0; }
     .listing-caption { font-size: .73rem; }
     .listing-card { padding: 19px; }
 }
+ chamodya
+=======
  nethmi
  Updated upstream
 =======
 =======
+ main
  main
 
 /* My Applications uses the shared dashboard theme. */
@@ -675,10 +692,13 @@ tr:last-child td { border: 0; }
     }
 }
 
+ chamodya
+=======
  nethmi
 =======
  Nuzrath
 =======
+ main
  main
 
 /* Student profile */
@@ -1241,7 +1261,10 @@ tr:last-child td { border: 0; }
         grid-template-columns: 1fr;
     }
 }
+ chamodya
+=======
  nethmi
+ main
 
 /* Post Internship */
 .company-post-link:hover { color: white; text-decoration: none; }
@@ -1264,6 +1287,8 @@ tr:last-child td { border: 0; }
 @media (max-width: 1100px) {
     .post-layout { grid-template-columns: 1fr; }
 }
+ chamodya
+=======
  Stashed changes
 =======
  main

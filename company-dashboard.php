@@ -122,8 +122,11 @@ $vacancies = $stmt->get_result();
                 <?php if ($company["approval_status"] === "Approved"): ?>
                     <a href="post-internship.php"><svg class="icon"><use href="#icon-file"/></svg>Post Internship</a>
                 <?php endif; ?>
+ chamodya
+=======
 
  
+ main
                 <a href="#company-vacancies"><svg class="icon"><use href="#icon-search"/></svg>My Vacancies</a>
                 <a href="#company-applications"><svg class="icon"><use href="#icon-file"/></svg>Applications</a>
                 <a href="#company-profile"><svg class="icon"><use href="#icon-user"/></svg>Company Profile</a>
@@ -161,8 +164,11 @@ $vacancies = $stmt->get_result();
                         <button class="filter-submit" type="button" disabled aria-describedby="posting-note">Post Internship <span aria-hidden="true">+</span></button>
                         <p id="posting-note">Admin approval is required to post internships.</p>
                     <?php endif; ?>
+ chamodya
+=======
                     <button class="filter-submit" type="button" disabled aria-describedby="posting-note">Post Internship <span aria-hidden="true">+</span></button>
                     <p id="posting-note">Posting will be available in the next update.</p>
+ main
                 </div>
             </section>
 
@@ -188,7 +194,10 @@ $vacancies = $stmt->get_result();
                 </div>
             <?php endif; ?>
 
+ chamodya
+=======
 
+ main
             <section class="stats" aria-label="Company overview">
                 <article class="stat surface"><span class="stat-icon"><svg class="icon" aria-hidden="true"><use href="#icon-search"/></svg></span><div><strong><?= $vacancyCounts["total"] ?></strong><p>Total vacancies</p></div></article>
                 <article class="stat surface"><span class="stat-icon"><svg class="icon" aria-hidden="true"><use href="#icon-file"/></svg></span><div><strong><?= $applicationCounts["total"] ?></strong><p>Applications received</p></div></article>

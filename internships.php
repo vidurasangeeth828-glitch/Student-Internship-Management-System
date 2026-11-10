@@ -5,6 +5,8 @@ date_default_timezone_set("Asia/Colombo");
 
 $user = null;
 if (isset($_SESSION["user_id"])) {
+ chamodya
+=======
  nethmi
 =======
  
@@ -484,6 +486,7 @@ date_default_timezone_set("Asia/Colombo");
 
 $user = null;
 if (isset($_SESSION["user_id"])) {
+ main
     $stmt = $conn->prepare("SELECT u.full_name, u.role, s.photo_path FROM users u LEFT JOIN students s ON s.user_id = u.user_id WHERE u.user_id = ? AND u.status = 'Active'");
     $stmt->bind_param("i", $_SESSION["user_id"]);
     $stmt->execute();
@@ -681,6 +684,9 @@ $locations = $stmt->get_result();
                                 <p class="internship-meta"><svg class="icon small-icon"><use href="#icon-pin"/></svg><?= e($internship["location"]) ?></p>
                                 <p class="internship-meta"><svg class="icon small-icon"><use href="#icon-calendar"/></svg>Apply by <strong><?= e(date("d M Y", strtotime($internship["deadline"]))) ?></strong></p>
                                 <a class="filter-submit" href="internship-details.php?id=<?= e($internship["internship_id"]) ?>" aria-label="View details: <?= e($internship["title"]) ?>">View details <span aria-hidden="true">→</span></a>
+ chamodya
+=======
+ main
  main
                             </article>
                         <?php endwhile; ?>

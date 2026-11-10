@@ -14,6 +14,8 @@ if (!isset($_SESSION["user_id"])) {
 require "db.php";
 date_default_timezone_set("Asia/Colombo");
 
+ chamodya
+=======
 
  Nuzrath
 $stmt = $conn->prepare("SELECT u.full_name, u.email, u.role, s.student_id
@@ -516,6 +518,7 @@ if (!isset($_SESSION["user_id"])) {
 require "db.php";
 date_default_timezone_set("Asia/Colombo");
 
+ main
  main
 $stmt = $conn->prepare("SELECT u.full_name, u.email, u.role, s.student_id, s.photo_path
                         FROM users u

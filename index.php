@@ -1,4 +1,7 @@
+ chamodya
+=======
  nethmi
+ main
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,6 +27,9 @@
         <nav id="main-navigation" aria-label="Main navigation">
             <a href="internships.php">Internships</a>
             <button class="nav-link" type="button" data-section="Companies">Companies</button>
+ chamodya
+            <a class="admin-button" href="admin-signin.php">Admin</a>
+=======
             <button class="admin-button" type="button" data-section="Admin">Admin</button>
             <a class="account-button" href="signin.php">Sign In / Sign Up</a>
         </nav>
