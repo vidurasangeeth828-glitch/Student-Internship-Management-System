@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS internships (
     company_id INT NOT NULL,
     title VARCHAR(120) NOT NULL,
     description TEXT NOT NULL,
+    description TEXT NOT NULL,
     category VARCHAR(80) NOT NULL DEFAULT 'Other',
     location VARCHAR(80) NOT NULL,
     deadline DATE NOT NULL,
@@ -45,6 +46,9 @@ CREATE TABLE IF NOT EXISTS internships (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (company_id) REFERENCES companies(company_id)
 ) ENGINE=InnoDB;
+
+ALTER TABLE internships ADD COLUMN IF NOT EXISTS category VARCHAR(80) NOT NULL DEFAULT 'Other' AFTER description;
+
 
 ALTER TABLE internships ADD COLUMN IF NOT EXISTS category VARCHAR(80) NOT NULL DEFAULT 'Other' AFTER description;
 
@@ -60,6 +64,7 @@ CREATE TABLE IF NOT EXISTS applications (
     FOREIGN KEY (student_id) REFERENCES students(student_id),
     FOREIGN KEY (internship_id) REFERENCES internships(internship_id)
 ) ENGINE=InnoDB;
+
 
 
 -- Student profile fields (safe to run again).

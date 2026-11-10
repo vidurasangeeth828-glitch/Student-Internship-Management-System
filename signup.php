@@ -1,5 +1,16 @@
 <?php
 require "session.php";
+ hashen
+ Updated upstream
+if (isset($_SESSION["user_id"])) {
+=======
+if (isset($_SESSION["user_id"])) {
+    if (($_SESSION["role"] ?? "") === "student") {
+        redirect("student-dashboard.php");
+    }
+ Stashed changes
+    redirect("account.php");
+
 if (isset($_SESSION["user_id"])) {
     if (($_SESSION["role"] ?? "") === "student") {
         redirect("student-dashboard.php");
