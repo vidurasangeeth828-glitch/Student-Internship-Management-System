@@ -34,7 +34,7 @@ $errors = [];
 $notice = $_SESSION["company_profile_notice"] ?? "";
 unset($_SESSION["company_profile_notice"]);
 $editing = isset($_GET["edit"]) && $_GET["edit"] === "1";
-$fields = ["company_name", "phone", "business_registration_no", "website", "contact_person", "description"];
+$fields = ["company_name", "phone", "business_registration_no", "website", "description", "contact_person"];
 $values = $company;
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -95,7 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 }
             } else {
                 $editToken = post_text("edit_token");
-                if (!isset($_SESSION["company_profile_edit"][$editToken]) || $_SESSION["company_profile_edit"][$editToken] != $current) {
+                if (!isset($_SESSION["company_profile_edit"][$editToken]) || $_SESSION["company_profile_edit"][$editToken] !== $current) {
                     $conn->rollback();
                     $_SESSION["company_profile_notice"] = "Your profile or approval status has changed. Open Edit Profile again.";
                     redirect("company-profile.php");
@@ -229,7 +229,7 @@ $limits = ["company_name" => 120, "phone" => 30, "business_registration_no" => 8
 
             <?php if ($notice): ?><p class="profile-success" role="status"><?= e($notice) ?></p><?php endif; ?>
             <section class="panel surface profile-editor">
-                <div class="panel-heading">
+                <div class="section-heading">
                     <h2><?= $editing ? 'Edit company profile' : 'Company information' ?></h2>
                     <?php if (!$editing): ?><a class="filter-submit company-post-link" href="company-profile.php?edit=1">Edit Profile</a><?php endif; ?>
                 </div>
@@ -250,11 +250,11 @@ $limits = ["company_name" => 120, "phone" => 30, "business_registration_no" => 8
                                 <div class="profile-field <?= $field === 'description' ? 'profile-field-wide' : '' ?>">
                                     <label for="<?= e($field) ?>"><?= e($label) ?></label>
                                     <?php if ($field === 'description'): ?>
-                                        <textarea id="<?= e($field) ?>" name="<?= e($field) ?>" rows="7" maxlength="3000"><?= e($values[$field]) ?></textarea>
+                                        <textarea id="<?= e($field) ?>" name="<?= e($field) ?>" rows="7" maxlength="3000" <?= isset($errors[$field]) ? 'aria-invalid="true" aria-describedby="company-error-' . e($field) . '"' : '' ?>><?= e($values[$field]) ?></textarea>
                                     <?php else: ?>
-                                        <input id="<?= e($field) ?>" name="<?= e($field) ?>" type="<?= $field === 'website' ? 'url' : 'text' ?>" maxlength="<?= $limits[$field] ?>" value="<?= e($values[$field]) ?>" <?= in_array($field, ['company_name', 'phone'], true) ? 'required' : '' ?> <?= isset($errors[$field]) ? 'aria-invalid="true"' : '' ?>>
+                                        <input id="<?= e($field) ?>" name="<?= e($field) ?>" type="<?= $field === 'website' ? 'url' : 'text' ?>" maxlength="<?= $limits[$field] ?>" value="<?= e($values[$field]) ?>" <?= in_array($field, ['company_name', 'phone'], true) ? 'required' : '' ?> <?= isset($errors[$field]) ? 'aria-invalid="true" aria-describedby="company-error-' . e($field) . '"' : '' ?>>
                                     <?php endif; ?>
-                                    <?php if (isset($errors[$field])): ?><p class="profile-field-error"><?= e($errors[$field]) ?></p><?php endif; ?>
+                                    <?php if (isset($errors[$field])): ?><p class="profile-field-error" id="company-error-<?= e($field) ?>"><?= e($errors[$field]) ?></p><?php endif; ?>
                                 </div>
                             <?php endforeach; ?>
                         </div>

@@ -78,6 +78,10 @@ $statusClasses = ["Pending" => "status-reviewed", "Approved" => "status-shortlis
                 <button class="icon-button sidebar-close" type="button" aria-label="Close menu"><svg class="icon"><use href="#icon-close"/></svg></button>
             </div>
             <nav class="sidebar-nav" aria-label="Admin navigation">
+                <a href="admin-dashboard.php?tab=users"><svg class="icon"><use href="#icon-user"/></svg>Manage users</a>
+                <a href="admin-dashboard.php?tab=vacancies"><svg class="icon"><use href="#icon-file"/></svg>Manage vacancies</a>
+                <a href="admin-dashboard.php?tab=applications"><svg class="icon"><use href="#icon-file"/></svg>Applications</a>
+                <a href="admin-dashboard.php"><svg class="icon"><use href="#icon-home"/></svg>Dashboard</a>
                 <a href="admin-companies.php" aria-current="page"><svg class="icon"><use href="#icon-user"/></svg>Company Approvals</a>
                 <a href="index.php"><svg class="icon"><use href="#icon-home"/></svg>Website Home</a>
             </nav>
@@ -160,11 +164,18 @@ $statusClasses = ["Pending" => "status-reviewed", "Approved" => "status-shortlis
                                 </details>
                             <?php endif; ?>
 
+                            <?php
+                            $detailsFingerprint = hash("sha256", json_encode([
+                                $company["company_name"], $company["phone"], $company["business_registration_no"],
+                                $company["website"], $company["description"], $company["contact_person"]
+                            ]));
+                            ?>
                             <?php if ($company["account_status"] === 'Active'): ?>
                                 <form action="admin-company-process.php" method="post" class="admin-company-actions">
                                     <input type="hidden" name="token" value="<?= e($_SESSION["token"]) ?>">
                                     <input type="hidden" name="company_id" value="<?= e($company["company_id"]) ?>">
                                     <input type="hidden" name="expected_status" value="<?= e($company["approval_status"]) ?>">
+                                    <input type="hidden" name="expected_details" value="<?= e($detailsFingerprint) ?>">
                                     <input type="hidden" name="return_status" value="<?= e($status) ?>">
                                     <p>Review the details before choosing a decision.</p>
                                     <?php if ($company["approval_status"] !== 'Approved'): ?>

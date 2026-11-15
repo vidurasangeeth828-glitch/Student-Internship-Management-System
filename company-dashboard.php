@@ -67,7 +67,8 @@ $stmt->bind_param("i", $companyId);
 $stmt->execute();
 $applications = $stmt->get_result();
 
-$sql = "SELECT internship_id, title, category, location, deadline, status
+$sql = "SELECT internship_id, title, category, location, deadline, status,
+        (SELECT COUNT(*) FROM applications a WHERE a.internship_id = internships.internship_id) AS application_count
         FROM internships WHERE company_id = ?
         ORDER BY created_at DESC, internship_id DESC";
 if (!$showAll) {
@@ -263,7 +264,8 @@ $vacancies = $stmt->get_result();
                             <article class="internship-card company-vacancy-card">
                                 <span class="company-vacancy-status <?= e($labelClass) ?>"><?= e($vacancyLabel) ?></span>
                                 <h3><?= e($vacancy["title"]) ?></h3>
-                                <a class="company-listing-link" href="company-vacancies.php">Manage vacancy →</a>
+                                <a class="company-listing-link" href="company-vacancies.php?keyword=<?= urlencode($vacancy["title"]) ?>">Manage vacancy →</a>
+                                <a class="company-listing-link" href="company-applications.php?internship=<?= e($vacancy["internship_id"]) ?>"><?= e($vacancy["application_count"]) ?> applications →</a>
                                 <p class="company-vacancy-category"><?= e($vacancy["category"]) ?></p>
                                 <p class="internship-meta"><svg class="icon small-icon" aria-hidden="true"><use href="#icon-pin"/></svg><?= e($vacancy["location"]) ?></p>
                                 <p class="internship-meta"><svg class="icon small-icon" aria-hidden="true"><use href="#icon-calendar"/></svg>Deadline <?= e(date("d M Y", strtotime($vacancy["deadline"]))) ?></p>

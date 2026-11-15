@@ -198,12 +198,18 @@ $status = "";
 if (isset($_GET["status"]) && is_string($_GET["status"]) && in_array($_GET["status"], ["Open", "Closed", "Archived", "Expired"], true)) {
     $status = $_GET["status"];
 }
+$keyword = "";
+if (isset($_GET["keyword"]) && is_string($_GET["keyword"])) {
+    $keyword = mb_substr(trim($_GET["keyword"]), 0, 100);
+}
+$search = "%" . $keyword . "%";
 $stmt = $conn->prepare("SELECT i.*, (SELECT COUNT(*) FROM applications a WHERE a.internship_id = i.internship_id) AS application_count
                         FROM internships i WHERE i.company_id = ?
                         AND (? = '' OR (i.status = ? AND (? <> 'Open' OR i.deadline >= ?))
                         OR (? = 'Expired' AND i.status = 'Open' AND i.deadline < ?))
+                        AND (i.title LIKE ? OR i.category LIKE ? OR i.location LIKE ?)
                         ORDER BY i.created_at DESC, i.internship_id DESC");
-$stmt->bind_param("issssss", $companyId, $status, $status, $status, $today, $status, $today);
+$stmt->bind_param("isssssssss", $companyId, $status, $status, $status, $today, $status, $today, $search, $search, $search);
 $stmt->execute();
 $vacancies = $stmt->get_result();
 ?>
@@ -345,7 +351,11 @@ $vacancies = $stmt->get_result();
 
             <?php else: ?>
                 <?php if ($errors): ?><p class="profile-error-summary" role="alert"><?= e($errors["save"] ?? "Please try again.") ?></p><?php endif; ?>
-                <form class="applications-filter surface" method="get" action="company-vacancies.php">
+                <form class="applications-filter surface" method="get" action="company-vacancies.php" role="search">
+                    <div class="profile-field">
+                        <label for="vacancy-search">Title, category or location</label>
+                        <input id="vacancy-search" name="keyword" maxlength="100" value="<?= e($keyword) ?>" placeholder="Search your vacancies">
+                    </div>
                     <div>
                         <label for="vacancy-status">Vacancy status</label>
                         <select name="status" id="vacancy-status">
@@ -356,7 +366,7 @@ $vacancies = $stmt->get_result();
                         </select>
                     </div>
                     <button class="filter-submit" type="submit">Filter vacancies</button>
-                    <?php if ($status !== ''): ?><a class="clear-filters" href="company-vacancies.php">Clear</a><?php endif; ?>
+                    <?php if ($status !== '' || $keyword !== ''): ?><a class="clear-filters" href="company-vacancies.php">Clear</a><?php endif; ?>
                     <p class="applications-count"><?= $vacancies->num_rows ?> vacancies</p>
                     <?php if ($approved): ?><a class="filter-submit company-post-link" href="post-internship.php">Post Internship +</a><?php endif; ?>
                 </form>

@@ -1,32 +1,41 @@
 <?php
 require "session.php";
 
-if (!isset($_SESSION["user_id"])) {
+if (!isset($_SESSION["user_id"]) && !isset($_SESSION["admin_id"])) {
     redirect("signin.php");
 }
-
 require "db.php";
-date_default_timezone_set("Asia/Colombo");
+$isAdmin = false;
+if (isset($_SESSION["admin_id"])) {
+    $stmt = $conn->prepare("SELECT admin_id FROM admins WHERE admin_id = ? AND status = 'Active'");
+    $stmt->bind_param("i", $_SESSION["admin_id"]);
+    $stmt->execute();
+    if (!$stmt->get_result()->fetch_assoc()) {
+        unset($_SESSION["admin_id"]);
+        redirect("admin-signin.php");
+    }
+    $isAdmin = true;
+} else {
+    $stmt = $conn->prepare("SELECT u.full_name, u.role, s.student_id, c.company_id
+                            FROM users u
+                            LEFT JOIN students s ON s.user_id = u.user_id
+                            LEFT JOIN companies c ON c.user_id = u.user_id
+                            WHERE u.user_id = ? AND u.status = 'Active'");
+    $stmt->bind_param("i", $_SESSION["user_id"]);
+    $stmt->execute();
+    $user = $stmt->get_result()->fetch_assoc();
 
-$stmt = $conn->prepare("SELECT u.full_name, u.role, s.student_id, c.company_id
-                        FROM users u
-                        LEFT JOIN students s ON s.user_id = u.user_id
-                        LEFT JOIN companies c ON c.user_id = u.user_id
-                        WHERE u.user_id = ? AND u.status = 'Active'");
-$stmt->bind_param("i", $_SESSION["user_id"]);
-$stmt->execute();
-$user = $stmt->get_result()->fetch_assoc();
+    if (!$user) {
+        unset($_SESSION["user_id"], $_SESSION["role"]);
+        redirect("signin.php");
+    }
 
-if (!$user) {
-    unset($_SESSION["user_id"], $_SESSION["role"]);
-    redirect("signin.php");
+    if (($user["role"] === "student" && !$user["student_id"]) || ($user["role"] === "company" && !$user["company_id"])) {
+        http_response_code(403);
+        exit("Your account profile is not available.");
+    }
+
 }
-
-if (($user["role"] === "student" && !$user["student_id"]) || ($user["role"] === "company" && !$user["company_id"])) {
-    http_response_code(403);
-    exit("Your account profile is not available.");
-}
-
 if ($_SERVER["REQUEST_METHOD"] !== "GET" && $_SERVER["REQUEST_METHOD"] !== "HEAD") {
     header("Allow: GET, HEAD");
     http_response_code(405);
@@ -44,7 +53,10 @@ if ($applicationId === false) {
 }
 
 // Students can download their own CV. Companies can download CVs sent to their internships.
-if ($user["role"] === "student") {
+if ($isAdmin) {
+    $stmt = $conn->prepare("SELECT cv_path FROM applications WHERE application_id = ?");
+    $stmt->bind_param("i", $applicationId);
+} elseif ($user["role"] === "student") {
     $stmt = $conn->prepare("SELECT cv_path FROM applications WHERE application_id = ? AND student_id = ?");
     $stmt->bind_param("ii", $applicationId, $user["student_id"]);
 } elseif ($user["role"] === "company") {

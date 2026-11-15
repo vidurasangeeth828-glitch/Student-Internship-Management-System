@@ -9,7 +9,7 @@ if (isset($_SESSION["admin_id"])) {
     $stmt->execute();
     $admin = $stmt->get_result()->fetch_assoc();
     if ($admin) {
-        redirect("admin-companies.php");
+        redirect("admin-dashboard.php");
     }
     unset($_SESSION["admin_id"]);
 }

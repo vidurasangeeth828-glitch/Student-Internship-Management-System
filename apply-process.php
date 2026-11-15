@@ -41,22 +41,28 @@ if (mb_strlen($coverLetter) > 2000) {
 }
 
 $cv = $_FILES["cv"] ?? null;
-if (!is_array($cv) || !isset($cv["error"], $cv["name"], $cv["tmp_name"], $cv["size"]) || is_array($cv["error"])) {
-    $error = "Please choose a PDF CV to upload.";
-} elseif ($cv["error"] === UPLOAD_ERR_INI_SIZE || $cv["error"] === UPLOAD_ERR_FORM_SIZE) {
-    $error = "Your CV must be 2 MB or smaller.";
-} elseif ($cv["error"] !== UPLOAD_ERR_OK) {
-    $error = "Your CV could not be uploaded. Please choose the file again.";
-} elseif ($cv["size"] < 1 || $cv["size"] > 2 * 1024 * 1024) {
-    $error = "Choose a PDF CV between 1 byte and 2 MB.";
-} elseif (strtolower(pathinfo($cv["name"], PATHINFO_EXTENSION)) !== "pdf" || !is_uploaded_file($cv["tmp_name"])) {
-    $error = "Please upload a PDF file only.";
-} else {
-    $fileInfo = new finfo(FILEINFO_MIME_TYPE);
-    $fileType = $fileInfo->file($cv["tmp_name"]);
-    $fileStart = file_get_contents($cv["tmp_name"], false, null, 0, 5);
-    if ($fileType !== "application/pdf" || $fileStart !== "%PDF-") {
-        $error = "This file is not a valid PDF. Please export your CV as a PDF and try again.";
+$hasCv = $cv !== null;
+if (is_array($cv) && isset($cv["error"]) && $cv["error"] === UPLOAD_ERR_NO_FILE) {
+    $hasCv = false;
+}
+if ($hasCv) {
+    if (!is_array($cv) || !isset($cv["error"], $cv["name"], $cv["tmp_name"], $cv["size"]) || is_array($cv["error"])) {
+        $error = "Please choose a PDF CV to upload.";
+    } elseif ($cv["error"] === UPLOAD_ERR_INI_SIZE || $cv["error"] === UPLOAD_ERR_FORM_SIZE) {
+        $error = "Your CV must be 2 MB or smaller.";
+    } elseif ($cv["error"] !== UPLOAD_ERR_OK) {
+        $error = "Your CV could not be uploaded. Please choose the file again.";
+    } elseif ($cv["size"] < 1 || $cv["size"] > 2 * 1024 * 1024) {
+        $error = "Choose a PDF CV between 1 byte and 2 MB.";
+    } elseif (strtolower(pathinfo($cv["name"], PATHINFO_EXTENSION)) !== "pdf" || !is_uploaded_file($cv["tmp_name"])) {
+        $error = "Please upload a PDF file only.";
+    } else {
+        $fileInfo = new finfo(FILEINFO_MIME_TYPE);
+        $fileType = $fileInfo->file($cv["tmp_name"]);
+        $fileStart = file_get_contents($cv["tmp_name"], false, null, 0, 5);
+        if ($fileType !== "application/pdf" || $fileStart !== "%PDF-") {
+            $error = "This file is not a valid PDF. Please export your CV as a PDF and try again.";
+        }
     }
 }
 
@@ -114,17 +120,20 @@ try {
         redirect("apply.php?id=" . $internshipId);
     }
 
-    $uploadDirectory = __DIR__ . "/uploads/cvs";
-    if (!is_dir($uploadDirectory) || !is_writable($uploadDirectory)) {
-        throw new RuntimeException("CV storage is unavailable.");
-    }
+    $cvPath = null;
+    if ($hasCv) {
+        $uploadDirectory = __DIR__ . "/uploads/cvs";
+        if (!is_dir($uploadDirectory) || !is_writable($uploadDirectory)) {
+            throw new RuntimeException("CV storage is unavailable.");
+        }
 
-    // Use a new random filename instead of the student's original filename.
-    $fileName = bin2hex(random_bytes(24)) . ".pdf";
-    $cvPath = "uploads/cvs/" . $fileName;
-    $savedFile = $uploadDirectory . "/" . $fileName;
-    if (!move_uploaded_file($cv["tmp_name"], $savedFile)) {
-        throw new RuntimeException("CV could not be saved.");
+        // Use a new random filename instead of the student's original filename.
+        $fileName = bin2hex(random_bytes(24)) . ".pdf";
+        $cvPath = "uploads/cvs/" . $fileName;
+        $savedFile = $uploadDirectory . "/" . $fileName;
+        if (!move_uploaded_file($cv["tmp_name"], $savedFile)) {
+            throw new RuntimeException("CV could not be saved.");
+        }
     }
 
     $stmt = $conn->prepare("INSERT INTO applications (student_id, internship_id, cover_letter, cv_path, status)

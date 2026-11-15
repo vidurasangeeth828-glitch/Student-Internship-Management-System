@@ -20,6 +20,7 @@ $companyId = filter_var(post_text("company_id"), FILTER_VALIDATE_INT, ["options"
 $decision = post_text("decision");
 $expectedStatus = post_text("expected_status");
 $returnStatus = post_text("return_status");
+$expectedDetails = post_text("expected_details");
 $statuses = ["Pending", "Approved", "Rejected"];
 if ($companyId === false || !in_array($decision, ["Approved", "Rejected"], true) || !in_array($expectedStatus, $statuses, true)) {
     http_response_code(400);
@@ -42,7 +43,7 @@ try {
         redirect("admin-signin.php");
     }
 
-    $stmt = $conn->prepare("SELECT c.approval_status, u.status FROM companies c
+    $stmt = $conn->prepare("SELECT c.*, u.status FROM companies c
                             JOIN users u ON u.user_id = c.user_id
                             WHERE c.company_id = ? AND u.role = 'company'
                             FOR UPDATE");
@@ -50,11 +51,21 @@ try {
     $stmt->execute();
     $company = $stmt->get_result()->fetch_assoc();
 
+    $currentDetails = "";
+    if ($company) {
+        $currentDetails = hash("sha256", json_encode([
+            $company["company_name"], $company["phone"], $company["business_registration_no"],
+            $company["website"], $company["description"], $company["contact_person"]
+        ]));
+    }
     if (!$company) {
         $message = "This company could not be found. Refresh the list and try again.";
         $isError = true;
     } elseif ($company["status"] !== "Active") {
         $message = "This company account is inactive. Its approval status has not been changed.";
+        $isError = true;
+    } elseif (!hash_equals($currentDetails, $expectedDetails)) {
+        $message = "The company details have changed. Review the latest registration information before deciding.";
         $isError = true;
     } elseif ($company["approval_status"] !== $expectedStatus) {
         $message = "The company's status has changed since this page was opened. Review its latest status before trying again.";

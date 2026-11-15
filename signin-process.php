@@ -21,6 +21,7 @@ if (post_text("remember_email") === "1") {
         "expires" => time() + 30 * 24 * 60 * 60,
         "path" => rtrim(str_replace("\\", "/", dirname($_SERVER["SCRIPT_NAME"])), "/") . "/",
         "httponly" => true,
+        "secure" => $secureConnection,
         "samesite" => "Lax"
     ]);
 } else {
@@ -28,6 +29,7 @@ if (post_text("remember_email") === "1") {
         "expires" => time() - 3600,
         "path" => rtrim(str_replace("\\", "/", dirname($_SERVER["SCRIPT_NAME"])), "/") . "/",
         "httponly" => true,
+        "secure" => $secureConnection,
         "samesite" => "Lax"
     ]);
 }

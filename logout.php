@@ -9,6 +9,7 @@ setcookie(session_name(), "", [
     "expires" => time() - 3600,
     "path" => $cookie["path"],
     "httponly" => true,
+    "secure" => $cookie["secure"],
     "samesite" => "Lax"
 ]);
 session_destroy();

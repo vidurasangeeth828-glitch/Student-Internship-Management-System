@@ -179,7 +179,7 @@ if ($companyId) {
             </section>
             <?php if ($vacancies): ?>
                 <section class="panel surface directory-vacancies">
-                    <div class="panel-heading"><h2>Available internships</h2></div>
+                    <div class="section-heading"><h2>Available internships</h2></div>
                     <div class="internship-grid">
                         <?php while ($vacancy = $vacancies->fetch_assoc()): ?>
                             <article class="internship-card">

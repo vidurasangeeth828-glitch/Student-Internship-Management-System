@@ -172,7 +172,7 @@ if (isset($_SESSION["applied_internship"]) && $_SESSION["applied_internship"] ==
                             <div class="application-result">
                                 <span class="empty-icon"><svg class="icon" aria-hidden="true"><use href="#icon-file"/></svg></span>
                                 <h2 id="form-heading"><?= $success ? "Application submitted!" : "You have already applied" ?></h2>
-                                <p <?= $success ? 'role="status"' : '' ?>><?= $success ? "Your CV and application have been saved successfully." : "An application for this internship is already saved to your account." ?></p>
+                                <p <?= $success ? 'role="status"' : '' ?>><?= $success ? "Your application has been saved successfully." : "An application for this internship is already saved to your account." ?></p>
                                 <span class="status status-<?= e(strtolower($application["status"])) ?>"><?= e($application["status"]) ?></span>
                                 <p>Applied on <?= e(date("d M Y", strtotime($application["applied_at"]))) ?></p>
                                 <a class="detail-primary" href="my-applications.php">View my applications <span aria-hidden="true">→</span></a>
@@ -192,11 +192,11 @@ if (isset($_SESSION["applied_internship"]) && $_SESSION["applied_internship"] ==
                                 <input type="hidden" name="MAX_FILE_SIZE" value="2097152">
 
                                 <div class="apply-field">
-                                    <label for="cv">Upload your CV <span class="field-required">Required</span></label>
+                                    <label for="cv">Upload your CV <span class="field-optional">Optional</span></label>
                                     <div class="cv-upload">
                                         <svg class="icon" aria-hidden="true"><use href="#icon-file"/></svg>
                                         <p>Choose your latest CV</p>
-                                        <input type="file" id="cv" name="cv" accept=".pdf,application/pdf" required aria-describedby="cv-help">
+                                        <input type="file" id="cv" name="cv" accept=".pdf,application/pdf" aria-describedby="cv-help">
                                         <small id="cv-help">PDF only · Maximum 2 MB. Your CV will be attached to this application.</small>
                                     </div>
                                 </div>
@@ -207,7 +207,7 @@ if (isset($_SESSION["applied_internship"]) && $_SESSION["applied_internship"] ==
                                     <textarea id="cover-letter" name="cover_letter" rows="7" maxlength="2000" aria-describedby="cover-help" placeholder="I am interested in this internship because…"><?= e($coverLetter) ?></textarea>
                                 </div>
 
-                                <p class="submission-note">Check your CV before submitting. You can apply only once for this internship.</p>
+                                <p class="submission-note">Check your application and any attached CV before submitting. You can apply only once for this internship.</p>
                                 <div class="apply-actions">
                                     <a class="detail-secondary" href="internship-details.php?id=<?= e($internshipId) ?>">Cancel</a>
                                     <button class="detail-primary" type="submit">Submit application <span aria-hidden="true">→</span></button>
