@@ -4,7 +4,11 @@ document.querySelectorAll(".password-toggle").forEach(function (button) {
         var show = field.type === "password";
         field.type = show ? "text" : "password";
         button.setAttribute("aria-pressed", String(show));
-        button.setAttribute("aria-label", show ? "Hide password" : "Show password");
+        var passwordName = "password";
+        if (field.id === "confirm-password") {
+            passwordName = "confirm password";
+        }
+        button.setAttribute("aria-label", (show ? "Hide " : "Show ") + passwordName);
     });
 });
 

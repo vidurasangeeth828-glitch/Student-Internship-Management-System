@@ -8,9 +8,10 @@ if (isset($_SESSION["admin_id"])) {
     $stmt->bind_param("i", $_SESSION["admin_id"]);
     $stmt->execute();
     $admin = $stmt->get_result()->fetch_assoc();
-    if (!$admin) {
-        unset($_SESSION["admin_id"]);
+    if ($admin) {
+        redirect("admin-companies.php");
     }
+    unset($_SESSION["admin_id"]);
 }
 
 $message = $_SESSION["admin_message"] ?? "";
@@ -35,18 +36,6 @@ unset($_SESSION["admin_message"], $_SESSION["admin_login_email"]);
                 <strong>SIMS</strong>
             </a>
 
-            <?php if ($admin): ?>
-                <h1 id="admin-title">You're signed in</h1>
-                <p class="auth-subtitle">Administrator access</p>
-                <div class="form-message" role="status">
-                    <strong><?= e($admin["full_name"]) ?></strong><br>
-                    <?= e($admin["email"]) ?>
-                </div>
-                <form action="logout.php" method="post" class="auth-form">
-                    <input type="hidden" name="token" value="<?= e($_SESSION["token"]) ?>">
-                    <button class="auth-submit" type="submit">Sign out</button>
-                </form>
-            <?php else: ?>
                 <h1 id="admin-title">Admin sign in</h1>
                 <p class="auth-subtitle">Sign in with your administrator account.</p>
                 <?php if ($message !== ""): ?>
@@ -68,7 +57,6 @@ unset($_SESSION["admin_message"], $_SESSION["admin_login_email"]);
                     <button class="auth-submit" type="submit">Sign in as admin</button>
                 </form>
                 <p class="auth-bottom">Student or company? <a href="signin.php">Sign in here</a></p>
-            <?php endif; ?>
 
             <a class="back-home" href="index.php"><span aria-hidden="true">←</span> Back to home</a>
         </section>

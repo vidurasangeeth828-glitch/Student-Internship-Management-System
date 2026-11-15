@@ -122,14 +122,9 @@ $vacancies = $stmt->get_result();
                 <?php if ($company["approval_status"] === "Approved"): ?>
                     <a href="post-internship.php"><svg class="icon"><use href="#icon-file"/></svg>Post Internship</a>
                 <?php endif; ?>
- chamodya
-=======
-
- 
- main
-                <a href="#company-vacancies"><svg class="icon"><use href="#icon-search"/></svg>My Vacancies</a>
-                <a href="#company-applications"><svg class="icon"><use href="#icon-file"/></svg>Applications</a>
-                <a href="#company-profile"><svg class="icon"><use href="#icon-user"/></svg>Company Profile</a>
+                <a href="company-vacancies.php"><svg class="icon"><use href="#icon-search"/></svg>My Vacancies</a>
+                <a href="company-applications.php"><svg class="icon"><use href="#icon-file"/></svg>Applications</a>
+                <a href="company-profile.php"><svg class="icon"><use href="#icon-user"/></svg>Company Profile</a>
             </nav>
             <div class="sidebar-bottom">
                 <p>Find potential.<br>Build your team.</p>
@@ -145,7 +140,7 @@ $vacancies = $stmt->get_result();
             <header class="topbar">
                 <button class="icon-button sidebar-open" type="button" aria-label="Open menu" aria-controls="student-sidebar" aria-expanded="false"><svg class="icon"><use href="#icon-menu"/></svg></button>
                 <a class="back-to-home" href="index.php">← Back to home</a>
-                <a class="account-chip surface" href="#company-profile" aria-label="Company profile: <?= e($company["company_name"]) ?>">
+                <a class="account-chip surface" href="company-profile.php" aria-label="Company profile: <?= e($company["company_name"]) ?>">
                     <span class="avatar" aria-hidden="true"><?= e(mb_strtoupper(mb_substr($company["company_name"], 0, 1))) ?></span>
                     <span class="account-copy"><strong><?= e($company["company_name"]) ?></strong><small>Company</small></span>
                 </a>
@@ -164,11 +159,6 @@ $vacancies = $stmt->get_result();
                         <button class="filter-submit" type="button" disabled aria-describedby="posting-note">Post Internship <span aria-hidden="true">+</span></button>
                         <p id="posting-note">Admin approval is required to post internships.</p>
                     <?php endif; ?>
- chamodya
-=======
-                    <button class="filter-submit" type="button" disabled aria-describedby="posting-note">Post Internship <span aria-hidden="true">+</span></button>
-                    <p id="posting-note">Posting will be available in the next update.</p>
- main
                 </div>
             </section>
 
@@ -194,10 +184,6 @@ $vacancies = $stmt->get_result();
                 </div>
             <?php endif; ?>
 
- chamodya
-=======
-
- main
             <section class="stats" aria-label="Company overview">
                 <article class="stat surface"><span class="stat-icon"><svg class="icon" aria-hidden="true"><use href="#icon-search"/></svg></span><div><strong><?= $vacancyCounts["total"] ?></strong><p>Total vacancies</p></div></article>
                 <article class="stat surface"><span class="stat-icon"><svg class="icon" aria-hidden="true"><use href="#icon-file"/></svg></span><div><strong><?= $applicationCounts["total"] ?></strong><p>Applications received</p></div></article>
@@ -208,10 +194,10 @@ $vacancies = $stmt->get_result();
                 <section class="panel surface" id="company-applications">
                     <div class="section-heading">
                         <h2><?= $showAll ? "All applications" : "Recent applications" ?></h2>
-                        <?php if (!$showAll && $applicationCounts["total"] > 5): ?>
-                            <a href="company-dashboard.php?all=1#company-applications">View all <span aria-hidden="true">→</span></a>
+                        <?php if ($applicationCounts["total"] > 0): ?>
+                            <a href="company-applications.php">View all <span aria-hidden="true">→</span></a>
                         <?php elseif ($showAll): ?>
-                            <a href="company-dashboard.php#company-applications">Show recent</a>
+                            <a href="company-applications.php">Show recent</a>
                         <?php endif; ?>
                     </div>
                     <?php if ($applications->num_rows > 0): ?>
@@ -241,9 +227,9 @@ $vacancies = $stmt->get_result();
 
                 <section class="panel surface quick-links company-quick-links">
                     <div class="section-heading"><h2>Quick links</h2></div>
-                    <a href="#company-vacancies"><svg class="icon" aria-hidden="true"><use href="#icon-search"/></svg>My vacancies<span aria-hidden="true">›</span></a>
-                    <a href="#company-applications"><svg class="icon" aria-hidden="true"><use href="#icon-file"/></svg>View applications<span aria-hidden="true">›</span></a>
-                    <a href="#company-profile"><svg class="icon" aria-hidden="true"><use href="#icon-user"/></svg>Company details<span aria-hidden="true">›</span></a>
+                    <a href="company-vacancies.php"><svg class="icon" aria-hidden="true"><use href="#icon-search"/></svg>My vacancies<span aria-hidden="true">›</span></a>
+                    <a href="company-applications.php"><svg class="icon" aria-hidden="true"><use href="#icon-file"/></svg>View applications<span aria-hidden="true">›</span></a>
+                    <a href="company-profile.php"><svg class="icon" aria-hidden="true"><use href="#icon-user"/></svg>Company details<span aria-hidden="true">›</span></a>
                 </section>
             </div>
 
@@ -251,9 +237,9 @@ $vacancies = $stmt->get_result();
                 <div class="section-heading">
                     <h2>My vacancies</h2>
                     <?php if (!$showAll && $vacancyCounts["total"] > 3): ?>
-                        <a href="company-dashboard.php?all=1#company-vacancies">View all <span aria-hidden="true">→</span></a>
+                        <a href="company-vacancies.php">View all <span aria-hidden="true">→</span></a>
                     <?php elseif ($showAll): ?>
-                        <a href="company-dashboard.php#company-vacancies">Show recent</a>
+                        <a href="company-vacancies.php">Show recent</a>
                     <?php endif; ?>
                 </div>
                 <?php if ($vacancies->num_rows > 0): ?>
@@ -277,6 +263,7 @@ $vacancies = $stmt->get_result();
                             <article class="internship-card company-vacancy-card">
                                 <span class="company-vacancy-status <?= e($labelClass) ?>"><?= e($vacancyLabel) ?></span>
                                 <h3><?= e($vacancy["title"]) ?></h3>
+                                <a class="company-listing-link" href="company-vacancies.php">Manage vacancy →</a>
                                 <p class="company-vacancy-category"><?= e($vacancy["category"]) ?></p>
                                 <p class="internship-meta"><svg class="icon small-icon" aria-hidden="true"><use href="#icon-pin"/></svg><?= e($vacancy["location"]) ?></p>
                                 <p class="internship-meta"><svg class="icon small-icon" aria-hidden="true"><use href="#icon-calendar"/></svg>Deadline <?= e(date("d M Y", strtotime($vacancy["deadline"]))) ?></p>

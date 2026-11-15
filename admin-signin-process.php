@@ -28,4 +28,4 @@ $_SESSION = [
     "admin_id" => (int) $admin["admin_id"],
     "token" => bin2hex(random_bytes(32))
 ];
-redirect("admin-signin.php");
+redirect("admin-companies.php");
